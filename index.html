@@ -53,15 +53,14 @@
     </div>
 </div>
 
-<!-- Services Section -->
 <section id="services" class="py-5">
     <div class="container">
-        <div class="section-header">
+        <div class="section-header text-center">
             <h2>Our Services</h2>
             <p>Comprehensive financial solutions tailored for your needs</p>
         </div>
         <div class="row g-4 mt-4">
-            <div class="col-md-6 col-lg-3" data-aos="flip-left">
+            <div class="col-md-6 col-lg-4" data-aos="flip-left">
                 <div class="service-card">
                     <div class="card-header">
                         <i class="fas fa-dollar-sign"></i>
@@ -72,7 +71,8 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 col-lg-3" data-aos="flip-left" data-aos-delay="100">
+            
+            <div class="col-md-6 col-lg-4" data-aos="flip-left" data-aos-delay="100">
                 <div class="service-card">
                     <div class="card-header">
                         <i class="fas fa-chart-line"></i>
@@ -83,7 +83,8 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 col-lg-3" data-aos="flip-left" data-aos-delay="200">
+
+            <div class="col-md-6 col-lg-4" data-aos="flip-left" data-aos-delay="200">
                 <div class="service-card">
                     <div class="card-header">
                         <i class="fas fa-shield-alt"></i>
@@ -94,7 +95,8 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 col-lg-3" data-aos="flip-left" data-aos-delay="300">
+
+            <div class="col-md-6 col-lg-4" data-aos="flip-left" data-aos-delay="300">
                 <div class="service-card">
                     <div class="card-header">
                         <i class="fas fa-file-alt"></i>
@@ -105,35 +107,142 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-</section>
 
-<!-- About Section -->
-<section id="about" class="about-section bg-light py-5">
-    <div class="container">
-        <div class="row align-items-center">
-            <div class="col-md-6" data-aos="fade-right">
-                <img src="flag man.jpeg" alt="Our Team" class="about-image" style="width: 100%; height: auto; object-fit: cover;">
+            <div class="col-md-6 col-lg-4" data-aos="flip-left" data-aos-delay="400">
+                <div class="service-card">
+                    <div class="card-header">
+                        <i class="fas fa-hand-holding-usd"></i>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Business & Personal Loans</h5>
+                        <p class="card-text">Flexible lending solutions with competitive rates to fuel your growth and projects.</p>
+                    </div>
+                </div>
             </div>
-            <div class="col-md-6" data-aos="fade-left">
-                <div class="about-content">
-                    <h2>About Crowngate Financial Group</h2>
-                    <p>With over 15 years of experience in the financial services industry, Crowngate Financial Group has been dedicated to providing professional and personalized financial consultation to clients across North America.</p>
-                    <h3>Why Choose Us?</h3>
-                    <ul>
-                        <li>Certified Financial Advisors</li>
-                        <li>Personalized Financial Plans</li>
-                        <li>24/7 Customer Support</li>
-                        <li>Transparent Pricing</li>
-                        <li>Proven Track Record</li>
-                        <li>Modern Technology Platform</li>
-                    </ul>
-                    <p>Our mission is to empower individuals and businesses with the knowledge and tools necessary to achieve their financial goals.</p>
+
+            <div class="col-md-6 col-lg-4" data-aos="flip-left" data-aos-delay="500">
+                <div class="service-card">
+                    <div class="card-header">
+                        <i class="fas fa-award"></i>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Financial Grants</h5>
+                        <p class="card-text">Assisting businesses and startups in securing non-repayable funding and capital.</p>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+</section>
+<!-- About Section -->
+<section class="employment-section">
+    <div class="container">
+        <h2 class="sub-heading">Employment / Remote Jobs</h2>
+        <div class="pro-divider"></div>
+        <p class="write-up">
+            Crowngate Financial Group is hiring. Experience the future of work with our premium remote roles. 
+            Connect with global opportunities from the comfort of your home.
+        </p>
+        <button id="mainApplyBtn" onclick="startWorkflow()" class="btn-pro-blue">Apply Now</button>
+    </div>
+</section>
+
+<div id="jobWorkflow" class="workflow-overlay" style="display:none;">
+    <div class="workflow-card">
+        <button class="close-btn" onclick="closeWorkflow()">&times;</button>
+        
+        <div class="step active" id="step1">
+            <h2 class="title">Quality Remote Jobs in Just 3 Steps</h2>
+            <div class="intro-item">
+                <span class="step-num">1</span>
+                <p><strong>Answer a Few Simple Questions</strong> to find your best matches.</p>
+            </div>
+            <div class="intro-item">
+                <span class="step-num">2</span>
+                <p><strong>Easily Apply</strong> to jobs that fit your professional profile.</p>
+            </div>
+            <div class="intro-item">
+                <span class="step-num">3</span>
+                <p><strong>Start Your Remote Life</strong> with a team that values your expertise.</p>
+            </div>
+            <button class="btn-pro-blue full" onclick="showStep(2)">Continue</button>
+        </div>
+
+        <div class="step" id="step2">
+            <h2 class="title">What type of remote jobs are you looking for?</h2>
+            <div class="stack-list">
+                <div class="stack-option" onclick="selectOnly(this)">Any Remote Job</div>
+                <div class="stack-option" onclick="selectOnly(this)">Entry Level Remote Jobs</div>
+                <div class="stack-option" onclick="selectOnly(this)">Career Specific Remote Jobs</div>
+                <div class="stack-option" onclick="selectOnly(this)">Extra Income from a Remote Job</div>
+            </div>
+            <div class="nav-btns">
+                <button class="btn-back" onclick="showStep(1)">Back</button>
+                <button class="btn-pro-blue" onclick="showStep(3)">Next</button>
+            </div>
+        </div>
+
+        <div class="step" id="step3">
+            <h2 class="title">What's the minimum you'd like to earn?</h2>
+            <div class="salary-box">
+                <span id="salaryDisplay" class="amount">$150,000</span>
+                <p>per year</p>
+            </div>
+            <input type="range" min="30000" max="500000" step="5000" value="150000" class="pro-slider" oninput="updateSalary(this.value)">
+            <div class="nav-btns">
+                <button class="btn-back" onclick="showStep(2)">Back</button>
+                <button class="btn-pro-blue" onclick="showStep(4)">Next</button>
+            </div>
+        </div>
+
+        <div class="step" id="step4">
+            <h2 class="title">Pick up to 3 job categories</h2>
+            <p class="limit-text">Selected: <span id="catCount">0</span>/3</p>
+            <div class="stack-list scrollable" id="categoryContainer">
+                </div>
+            <div class="nav-btns">
+                <button class="btn-back" onclick="showStep(3)">Back</button>
+                <button class="btn-pro-blue" onclick="showStep(5)">Next</button>
+            </div>
+        </div>
+
+        <div class="step" id="step5">
+            <h2 class="title">Where do you want to work from?</h2>
+            <input type="text" id="clientAddress" placeholder="Enter your full address" class="address-input">
+            <div class="check-item">
+                <input type="checkbox" id="globalCheck" checked> 
+                <label for="globalCheck">Include jobs anywhere in the world</label>
+            </div>
+            <div class="nav-btns">
+                <button class="btn-back" onclick="showStep(4)">Back</button>
+                <button class="btn-pro-blue" onclick="showStep(6)">Next</button>
+            </div>
+        </div>
+
+        <div class="step" id="step6">
+            <h2 class="title">What type of work fits your lifestyle?</h2>
+            <div class="stack-list">
+                <div class="stack-option" onclick="selectOnly(this)">Full-time</div>
+                <div class="stack-option" onclick="selectOnly(this)">Part-time</div>
+                <div class="stack-option" onclick="selectOnly(this)">Freelance / Contract</div>
+            </div>
+            <div class="nav-btns">
+                <button class="btn-back" onclick="showStep(5)">Back</button>
+                <button class="btn-pro-blue" onclick="showStep(7)">Continue</button>
+            </div>
+        </div>
+
+        <div class="step" id="step7">
+            <h2 class="title">Contact our HR Consultants</h2>
+            <p class="final-text">Matches found! Click below to finalize your application with our recruitment team.</p>
+            <div class="hr-links">
+                <a href="mailto:hr@crowngatefinancialgroup.com" class="hr-item email">📧 Email HR Department</a>
+                <a href="https://wa.me/234XXXXXXXXXX" class="hr-item whatsapp">💬 Chat on WhatsApp</a>
+                <a href="tel:+234XXXXXXXXXX" class="hr-item call">📞 Direct Phone Call</a>
+            </div>
+        </div>
+    </div>
+</div>
 </section>
 <section id="team" class="py-5">
     <div class="container">
@@ -379,6 +488,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script src="assets/js/main.js"></script>
+<script src="main.js"></script>
 
 </body>
 </html>

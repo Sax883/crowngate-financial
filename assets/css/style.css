@@ -1,5 +1,5 @@
 :root {
-    --canada-red: #C41E3A;
+    --canada-red: #007BFF;        /* Professional Royal Blue */
     --canada-white: #FFFFFF;
     --dark-gray: #2C3E50;
     --light-gray: #ECF0F1;
@@ -19,7 +19,7 @@ body {
 
 /* Navigation */
 .navbar {
-    background: linear-gradient(135deg, var(--canada-red) 0%, #a01730 100%);
+    background: linear-gradient(135deg, var(--canada-red) 0%, #0056b3 100%);
     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     padding: 1rem 0;
 }
@@ -46,7 +46,7 @@ body {
 
 /* Hero Section */
 .hero {
-    background: linear-gradient(135deg, var(--canada-red) 0%, #a01730 100%);
+    background: linear-gradient(135deg, var(--canada-red) 0%, #0056b3 100%);
     color: var(--canada-white);
     padding: 80px 0;
     text-align: center;
@@ -96,10 +96,10 @@ body {
 }
 
 .btn-canada-red:hover {
-    background-color: #a01730;
+    background-color: #0056b3;
     color: var(--canada-white);
     transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(196, 30, 58, 0.3);
+    box-shadow: 0 5px 15px rgba(0, 123, 255, 0.3);
 }
 
 .btn-outline-canada {
@@ -125,11 +125,11 @@ body {
 
 .service-card:hover {
     transform: translateY(-10px);
-    box-shadow: 0 15px 30px rgba(196, 30, 58, 0.2);
+    box-shadow: 0 15px 30px rgba(0, 123, 255, 0.2);
 }
 
 .service-card .card-header {
-    background: linear-gradient(135deg, var(--canada-red) 0%, #a01730 100%);
+    background: linear-gradient(135deg, var(--canada-red) 0%, #0056b3 100%);
     color: var(--canada-white);
     border: none;
     padding: 1.5rem;
@@ -218,7 +218,7 @@ body {
 
 .form-control:focus, .form-select:focus {
     border-color: var(--canada-red);
-    box-shadow: 0 0 0 0.2rem rgba(196, 30, 58, 0.25);
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
 }
 
 .form-label {
@@ -270,7 +270,7 @@ body {
 
 /* Footer */
 footer {
-    background: linear-gradient(135deg, var(--canada-red) 0%, #a01730 100%);
+    background: linear-gradient(135deg, var(--canada-red) 0%, #0056b3 100%);
     color: var(--canada-white);
     padding: 3rem 0 1rem;
     text-align: center;
@@ -324,7 +324,7 @@ footer .divider {
 }
 
 .carousel-control-prev, .carousel-control-next {
-    background: rgba(196, 30, 58, 0.5);
+    background: rgba(0, 123, 255, 0.5);
     width: 50px;
     border-radius: 5px;
 }
@@ -340,7 +340,7 @@ footer .divider {
 /* Verified Badge */
 .verified-badge {
     display: inline-block;
-    background: linear-gradient(135deg, var(--canada-red) 0%, #a01730 100%);
+    background: linear-gradient(135deg, var(--canada-red) 0%, #0056b3 100%);
     color: var(--canada-white);
     padding: 1rem 2rem;
     border-radius: 5px;
@@ -365,7 +365,7 @@ footer .divider {
 .chat-button {
     width: 60px;
     height: 60px;
-    background: linear-gradient(135deg, var(--canada-red) 0%, #a01730 100%);
+    background: linear-gradient(135deg, var(--canada-red) 0%, #0056b3 100%);
     color: var(--canada-white);
     border: none;
     border-radius: 50%;
@@ -380,7 +380,7 @@ footer .divider {
 
 .chat-button:hover {
     transform: scale(1.1);
-    box-shadow: 0 8px 20px rgba(196, 30, 58, 0.3);
+    box-shadow: 0 8px 20px rgba(0, 123, 255, 0.3);
 }
 
 .chat-window {
@@ -402,7 +402,7 @@ footer .divider {
 }
 
 .chat-header {
-    background: linear-gradient(135deg, var(--canada-red) 0%, #a01730 100%);
+    background: linear-gradient(135deg, var(--canada-red) 0%, #0056b3 100%);
     color: var(--canada-white);
     padding: 1.5rem;
     border-radius: 8px 8px 0 0;
@@ -656,7 +656,7 @@ footer .divider {
 .user-sidebar {
     width: 280px;
     min-width: 280px;
-    background: linear-gradient(135deg, var(--canada-red) 0%, #a01730 100%);
+    background: linear-gradient(135deg, var(--canada-red) 0%, #0056b3 100%);
     position: sticky;
     top: 0;
     height: 100vh;
@@ -702,4 +702,114 @@ footer .divider {
         height: auto;
         position: relative;
     }
+}
+/* --- MOBILE CHAT WIDGET FIX --- */
+@media screen and (max-width: 480px) {
+    /* Make the chat window fit the phone width */
+    .chat-window {
+        width: 90% !important;   /* Stretches to 90% of the screen */
+        right: 5% !important;    /* Even 5% gap on the right */
+        left: 5% !important;     /* Even 5% gap on the left */
+        bottom: 80px !important; /* Positions it above the chat button */
+        max-height: 70vh !important; /* Prevents it from being too tall */
+    }
+
+    /* Ensure the input area doesn't overflow */
+    .chat-input-area {
+        display: flex;
+        padding: 10px;
+    }
+
+    .chat-input-area input {
+        width: 75% !important;
+        font-size: 16px !important; /* Prevents auto-zoom on iPhones */
+    }
+
+    .chat-input-area button {
+        width: 25% !important;
+    }
+}
+/* Professional Blue Palette */
+:root {
+    --pro-blue: #003366;
+    --pro-blue-hover: #002244;
+    --light-gray: #f9fbfd;
+}
+
+.employment-section { text-align: center; padding: 60px 20px; background: white; }
+.pro-divider { width: 50px; height: 3px; background: var(--pro-blue); margin: 15px auto; }
+.btn-pro-blue { background: var(--pro-blue); color: white; border: none; padding: 15px 40px; border-radius: 5px; cursor: pointer; font-weight: bold; }
+
+/* Workflow Layout */
+.workflow-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; }
+.workflow-card { background: white; max-width: 450px; margin: 40px auto; padding: 30px; border-radius: 12px; position: relative; max-height: 90vh; overflow-y: auto; }
+
+/* Vertical Stacking for Steps */
+.step { display: none; flex-direction: column; gap: 20px; }
+.step.active { display: flex; }
+
+.stack-list { display: flex; flex-direction: column; gap: 10px; }
+.stack-option { border: 1px solid #ddd; padding: 15px; border-radius: 8px; cursor: pointer; transition: 0.2s; }
+.stack-option:hover { border-color: var(--pro-blue); background: #f0f7ff; }
+.stack-option.selected { border: 2px solid var(--pro-blue); background: #eef6ff; font-weight: bold; }
+
+/* HR Styling */
+.hr-links { display: flex; flex-direction: column; gap: 12px; margin-top: 20px; }
+.hr-item { text-decoration: none; padding: 15px; background: var(--pro-blue); color: white; border-radius: 8px; text-align: center; font-weight: bold; }
+:root {
+    --pro-blue: #007bff; /* The professional blue we updated earlier */
+    --pro-dark-blue: #0056b3;
+    --white: #ffffff;
+    --gray: #f8f9fa;
+}
+
+.employment-section { padding: 80px 20px; text-align: center; }
+.pro-divider { width: 60px; height: 4px; background: var(--pro-blue); margin: 20px auto; }
+
+/* Workflow Overlay */
+.workflow-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.85); z-index: 9999; display: flex; align-items: center; justify-content: center;
+}
+
+.workflow-card {
+    background: var(--white); width: 95%; max-width: 480px; padding: 40px;
+    border-radius: 15px; position: relative; max-height: 90vh; overflow-y: auto;
+}
+
+.step { display: none; flex-direction: column; gap: 20px; }
+.step.active { display: flex; animation: fadeIn 0.3s ease; }
+
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Stacked Options */
+.stack-list { display: flex; flex-direction: column; gap: 12px; }
+.stack-option {
+    border: 1px solid #dee2e6; padding: 15px; border-radius: 10px;
+    cursor: pointer; transition: 0.3s; text-align: left;
+}
+.stack-option:hover { border-color: var(--pro-blue); background: var(--gray); }
+.stack-option.selected { border: 2px solid var(--pro-blue); background: #e7f1ff; color: var(--pro-blue); font-weight: 600; }
+
+/* Category Scrollbox */
+.scrollable { max-height: 250px; overflow-y: auto; padding-right: 5px; }
+
+/* Buttons */
+.btn-pro-blue { 
+    background: var(--pro-blue); color: var(--white); border: none; 
+    padding: 15px 30px; border-radius: 8px; font-weight: bold; cursor: pointer;
+}
+.full { width: 100%; }
+.btn-back { background: none; border: 1px solid #ccc; padding: 10px 20px; border-radius: 8px; cursor: pointer; }
+
+/* HR Channel Colors */
+.hr-item { text-decoration: none; color: white; padding: 18px; border-radius: 10px; text-align: center; font-weight: bold; }
+.email { background: #444; }
+.whatsapp { background: #25D366; }
+.call { background: var(--pro-blue); }
+
+/* Mobile Adjustments */
+@media (max-width: 768px) {
+    .workflow-card { padding: 25px; margin-top: 20px; }
+    .title { font-size: 1.4rem; }
 }

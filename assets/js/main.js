@@ -185,3 +185,129 @@ window.addEventListener('load', function() {
         });
     });
 });
+function openWorkflow() {
+    const modal = document.getElementById('jobModal');
+    if (modal) {
+        modal.style.display = 'block';
+    }
+}
+
+function closeWorkflow() {
+    const modal = document.getElementById('jobModal');
+    if (modal) {
+        modal.style.display = 'none';
+    }
+}
+
+function nextStep(stepNumber) {
+    // Hide all steps
+    document.querySelectorAll('.step').forEach(step => {
+        step.classList.remove('active');
+    });
+    // Show the requested step
+    const targetStep = document.getElementById('step' + stepNumber);
+    if (targetStep) {
+        targetStep.classList.add('active');
+    }
+}
+
+// Optional: Close modal if user clicks outside of the white box
+window.onclick = function(event) {
+    const modal = document.getElementById('jobModal');
+    if (event.target == modal) {
+        closeWorkflow();
+    }
+}
+/* --- Employment Workflow Logic --- */
+
+// 1. Full list of 100 Professional Categories
+const allCategories = [
+    "Accounting", "Financial Analysis", "Investment Banking", "Risk Management", "Auditing",
+    "Tax Consulting", "Data Science", "Web Development", "Cyber Security", "Project Management",
+    "Customer Support", "Digital Marketing", "Content Writing", "Virtual Assistant", "Legal Advice",
+    "Sales Strategy", "Human Resources", "Supply Chain", "UI/UX Design", "Business Development",
+    "Insurance Underwriting", "Cryptocurrency Trading", "Stock Analysis", "Forex Trading", "E-commerce",
+    "Wealth Management", "Portfolio Manager", "Compliance Officer", "Loan Officer", "Actuary",
+    "Budget Analyst", "Credit Analyst", "Financial Planner", "Treasury Manager", "Economic Researcher",
+    "Social Media Manager", "SEO Specialist", "Email Marketing", "Brand Strategist", "Copywriter",
+    "Graphic Designer", "Video Editor", "Mobile App Developer", "Software Engineer", "DevOps Engineer",
+    "Database Administrator", "Cloud Architect", "IT Support Specialist", "Network Engineer", "Systems Analyst",
+    "Public Relations", "Event Planner", "Executive Assistant", "Office Manager", "Data Entry",
+    "Transcriptionist", "Customer Success Manager", "Technical Recruiter", "Training Specialist", "Logistics Coordinator",
+    "Market Research Analyst", "Business Analyst", "Product Manager", "Operations Manager", "Quality Assurance",
+    "Translation Services", "Grant Writer", "Proofreader", "Tutor / Educator", "Instructional Designer",
+    "Medical Billing", "Healthcare Admin", "Pharmacy Technician", "Case Manager", "Sales Representative",
+    "Account Executive", "Telemarketer", "Real Estate Agent", "Property Manager", "Travel Agent",
+    "Interior Designer", "Architectural Drafter", "Civil Engineer", "Mechanical Engineer", "Electrical Engineer",
+    "Environmental Consultant", "Sustainability Officer", "Legal Secretary", "Paralegal", "Court Reporter",
+    "Claims Adjuster", "Safety Coordinator", "Warehouse Manager", "Inventory Specialist", "Purchasing Agent",
+    "Bookkeeper", "Payroll Specialist", "Cost Estimator", "Internal Auditor", "Fraud Investigator"
+];
+
+let selectedCats = [];
+
+// 2. Open and Close functions
+function startWorkflow() {
+    const modal = document.getElementById('jobWorkflow');
+    if(modal) {
+        modal.style.display = 'flex';
+        loadCategories();
+    }
+}
+
+function closeWorkflow() {
+    const modal = document.getElementById('jobWorkflow');
+    if(modal) modal.style.display = 'none';
+}
+
+// 3. Navigation between steps
+function showStep(n) {
+    // Hide all steps
+    document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+    // Show target step
+    const target = document.getElementById('step' + n);
+    if(target) target.classList.add('active');
+}
+
+// 4. Handle selection for Type and Lifestyle (Single choice)
+function selectOnly(el) {
+    const options = el.parentElement.querySelectorAll('.stack-option');
+    options.forEach(opt => opt.classList.remove('selected'));
+    el.classList.add('selected');
+}
+
+// 5. Salary Slider Display
+function updateSalary(val) {
+    const display = document.getElementById('salaryDisplay');
+    if(display) {
+        display.innerText = '$' + Number(val).toLocaleString();
+    }
+}
+
+// 6. Category Logic (Limit to 3)
+function loadCategories() {
+    const container = document.getElementById('categoryContainer');
+    if(!container) return;
+    
+    // Sort alphabetically and display
+    container.innerHTML = allCategories.sort().map(cat => `
+        <div class="stack-option" onclick="toggleCategory(this, '${cat}')">${cat}</div>
+    `).join('');
+}
+
+function toggleCategory(el, cat) {
+    if (el.classList.contains('selected')) {
+        el.classList.remove('selected');
+        selectedCats = selectedCats.filter(i => i !== cat);
+    } else {
+        if (selectedCats.length < 3) {
+            el.classList.add('selected');
+            selectedCats.push(cat);
+        } else {
+            alert("You have reached the limit. Please select only 3 categories.");
+        }
+    }
+    // Update the counter on screen
+    const counter = document.getElementById('catCount');
+    if(counter) counter.innerText = selectedCats.length;
+}
