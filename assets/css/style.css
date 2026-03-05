@@ -729,87 +729,41 @@ footer .divider {
         width: 25% !important;
     }
 }
-/* Professional Blue Palette */
+/* --- Professional Blue Styling --- */
 :root {
-    --pro-blue: #003366;
-    --pro-blue-hover: #002244;
-    --light-gray: #f9fbfd;
+    --pro-blue: #003366; 
+    --pro-blue-hover: #004a94;
 }
 
-.employment-section { text-align: center; padding: 60px 20px; background: white; }
-.pro-divider { width: 50px; height: 3px; background: var(--pro-blue); margin: 15px auto; }
-.btn-pro-blue { background: var(--pro-blue); color: white; border: none; padding: 15px 40px; border-radius: 5px; cursor: pointer; font-weight: bold; }
+.employment-section { padding: 60px 20px; text-align: center; background: #fff; }
+.pro-blue-divider { width: 50px; height: 4px; background: var(--pro-blue); margin: 0 auto 20px; }
+.btn-pro-blue { background: var(--pro-blue); color: #fff; border: none; padding: 15px 40px; border-radius: 4px; font-weight: bold; cursor: pointer; }
 
-/* Workflow Layout */
-.workflow-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; }
-.workflow-card { background: white; max-width: 450px; margin: 40px auto; padding: 30px; border-radius: 12px; position: relative; max-height: 90vh; overflow-y: auto; }
-
-/* Vertical Stacking for Steps */
-.step { display: none; flex-direction: column; gap: 20px; }
-.step.active { display: flex; }
-
-.stack-list { display: flex; flex-direction: column; gap: 10px; }
-.stack-option { border: 1px solid #ddd; padding: 15px; border-radius: 8px; cursor: pointer; transition: 0.2s; }
-.stack-option:hover { border-color: var(--pro-blue); background: #f0f7ff; }
-.stack-option.selected { border: 2px solid var(--pro-blue); background: #eef6ff; font-weight: bold; }
-
-/* HR Styling */
-.hr-links { display: flex; flex-direction: column; gap: 12px; margin-top: 20px; }
-.hr-item { text-decoration: none; padding: 15px; background: var(--pro-blue); color: white; border-radius: 8px; text-align: center; font-weight: bold; }
-:root {
-    --pro-blue: #007bff; /* The professional blue we updated earlier */
-    --pro-dark-blue: #0056b3;
-    --white: #ffffff;
-    --gray: #f8f9fa;
+/* --- Support Fix for Mobile --- */
+#customer-support-widget, .support-sidebar {
+    right: 15px !important;
+    left: auto !important;
+    max-width: 90vw !important;
+    bottom: 20px !important;
 }
 
-.employment-section { padding: 80px 20px; text-align: center; }
-.pro-divider { width: 60px; height: 4px; background: var(--pro-blue); margin: 20px auto; }
+/* --- Workflow Modal --- */
+.workflow-overlay { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.8); z-index: 10000; align-items: center; justify-content: center; }
+.workflow-card { background: #fff; width: 95%; max-width: 500px; border-radius: 12px; padding: 30px; position: relative; max-height: 90vh; overflow-y: auto; }
+.wf-step { display: none; }
+.wf-step.active { display: block; }
 
-/* Workflow Overlay */
-.workflow-overlay {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0,0,0,0.85); z-index: 9999; display: flex; align-items: center; justify-content: center;
-}
+.wf-opt { width: 100%; padding: 15px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 8px; background: #fff; cursor: pointer; text-align: left; transition: 0.2s; }
+.wf-opt.selected { border: 2px solid var(--pro-blue); background: #f0f7ff; color: var(--pro-blue); font-weight: bold; }
 
-.workflow-card {
-    background: var(--white); width: 95%; max-width: 480px; padding: 40px;
-    border-radius: 15px; position: relative; max-height: 90vh; overflow-y: auto;
-}
+.btn-wf-next { width: 100%; padding: 15px; background: var(--pro-blue); color: #fff; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 20px; }
+.btn-wf-next:disabled { background: #ccc; cursor: not-allowed; }
 
-.step { display: none; flex-direction: column; gap: 20px; }
-.step.active { display: flex; animation: fadeIn 0.3s ease; }
+.cat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; max-height: 250px; overflow-y: auto; margin-top: 15px; border: 1px solid #eee; padding: 10px; }
+.cat-item { padding: 10px; border: 1px solid #eee; font-size: 13px; cursor: pointer; border-radius: 4px; }
+.cat-item.selected { background: var(--pro-blue); color: white; border-color: var(--pro-blue); }
 
-@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-/* Stacked Options */
-.stack-list { display: flex; flex-direction: column; gap: 12px; }
-.stack-option {
-    border: 1px solid #dee2e6; padding: 15px; border-radius: 10px;
-    cursor: pointer; transition: 0.3s; text-align: left;
-}
-.stack-option:hover { border-color: var(--pro-blue); background: var(--gray); }
-.stack-option.selected { border: 2px solid var(--pro-blue); background: #e7f1ff; color: var(--pro-blue); font-weight: 600; }
-
-/* Category Scrollbox */
-.scrollable { max-height: 250px; overflow-y: auto; padding-right: 5px; }
-
-/* Buttons */
-.btn-pro-blue { 
-    background: var(--pro-blue); color: var(--white); border: none; 
-    padding: 15px 30px; border-radius: 8px; font-weight: bold; cursor: pointer;
-}
-.full { width: 100%; }
-.btn-back { background: none; border: 1px solid #ccc; padding: 10px 20px; border-radius: 8px; cursor: pointer; }
-
-/* HR Channel Colors */
-.hr-item { text-decoration: none; color: white; padding: 18px; border-radius: 10px; text-align: center; font-weight: bold; }
-.email { background: #444; }
-.whatsapp { background: #25D366; }
-.call { background: var(--pro-blue); }
-
-/* Mobile Adjustments */
-@media (max-width: 768px) {
-    .workflow-card { padding: 25px; margin-top: 20px; }
-    .title { font-size: 1.4rem; }
-}
+.hr-link { display: block; padding: 15px; margin-top: 10px; border-radius: 8px; text-decoration: none; color: #fff; font-weight: bold; }
+.hr-link.mail { background: var(--pro-blue); }
+.hr-link.wa { background: #25d366; }
+.hr-link.tel { background: #333; }
