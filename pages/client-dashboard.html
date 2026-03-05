@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client Dashboard - Crowngate Financial Group</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <style>
+        .dashboard-container {
+            display: flex; /* Changed to flex for better sidebar/content separation */
+            min-height: 100vh;
+            width: 100%;
+        }
+
+        .sidebar {
+            background: linear-gradient(135deg, var(--canada-red) 0%, #a01730 100%);
+            color: var(--canada-white);
+            padding: 2rem 0;
+            position: fixed;
+            width: 250px;
+            height: 100vh;
+            overflow-y: auto;
+            z-index: 1000;
+            flex-shrink: 0;
+        }
+
+        /* --- THE FIX COMMANDS --- */
+        .main-content {
+            margin-left: 250px; /* Offset for the fixed sidebar */
+            padding: 2rem;
+            flex-grow: 1; /* Forces content to take up all remaining horizontal space */
+            width: calc(100% - 250px);
+            display: block !important;
+            background-color: var(--canada-white);
+        }
+
+        /* This fixes the "One word per line" skipping issue */
+        .content-section, .content-card, .message-box, .stat-card {
+            width: 100% !important;
+            max-width: none !important;
+            display: block !important;
+            white-space: normal !important; /* Stops text from forcing vertical stacks */
+        }
+
+        /* Forces the welcome tip and alerts to be horizontal rectangles */
+        .alert, .content-card p, .content-card h3 {
+            width: 100% !important;
+            display: block !important;
+        }
+        /* --- END OF FIX --- */
+
+        .sidebar h5 {
+            text-align: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            margin-bottom: 1.5rem;
+        }
+
+        .sidebar .nav-link {
+            color: rgba(255,255,255,0.8) !important;
+            padding: 0.75rem 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar .nav-link:hover,
+        .sidebar .nav-link.active {
+            background: rgba(255,255,255,0.1);
+            color: var(--canada-white) !important;
+        }
+
+        .content-card {
+            background: var(--canada-white);
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 1.5rem;
+            background: linear-gradient(135deg, var(--light-gray) 0%, var(--canada-white) 100%);
+            border-left: 4px solid var(--canada-red);
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .stat-card h4 {
+            color: var(--canada-red);
+            font-weight: 700;
+            margin: 0.5rem 0;
+        }
+
+        .message-box {
+            background: var(--light-gray);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--canada-red);
+            margin-bottom: 1rem;
+        }
+
+        .message-box h6 {
+            color: var(--dark-gray);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .message-box p {
+            margin: 0;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+
+        .btn-logout {
+            background: rgba(255,255,255,0.2);
+            color: var(--canada-white);
+            border: 1px solid rgba(255,255,255,0.5);
+            width: 100%;
+            margin-top: auto;
+        }
+
+        .btn-logout:hover {
+            background: rgba(255,255,255,0.3);
+            color: var(--canada-white);
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                position: fixed;
+                width: 80%;
+                max-width: 250px;
+                left: 0;
+                top: 0;
+                height: 100vh;
+                z-index: 1000;
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+
+            .sidebar.active {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+                width: 100%;
+                padding: 1.5rem 1rem;
+                padding-top: 4rem;
+            }
+        }
+
+        .mobile-menu-toggle {
+            display: none;
+            position: fixed;
+            top: 1rem;
+            left: 1rem;
+            z-index: 1001;
+            background: var(--canada-red);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-toggle {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<button class="mobile-menu-toggle" id="mobileMenuToggle" onclick="toggleClientDashboardMenu()">
+    <i class="fas fa-bars"></i> Menu
+</button>
+
+<div class="dashboard-container">
+    <div class="sidebar">
+        <h5><i class="fas fa-user-circle"></i> My Account</h5>
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link active" href="#dashboard" onclick="showSection('dashboard')">
+                    <i class="fas fa-home me-2"></i> Dashboard
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#appointments" onclick="showSection('appointments')">
+                    <i class="fas fa-calendar-alt me-2"></i> My Appointments
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#portfolio" onclick="showSection('portfolio')">
+                    <i class="fas fa-briefcase me-2"></i> Portfolio
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#messages" onclick="showSection('messages')">
+                    <i class="fas fa-envelope me-2"></i> Messages
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#profile" onclick="showSection('profile')">
+                    <i class="fas fa-user me-2"></i> Profile
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="contact.html">
+                    <i class="fas fa-headset me-2"></i> Support
+                </a>
+            </li>
+        </ul>
+        <button class="btn btn-logout" onclick="logout()" style="position: absolute; bottom: 20px; width: calc(100% - 40px); margin-left: 20px;">
+            <i class="fas fa-sign-out-alt me-2"></i> Logout
+        </button>
+    </div>
+
+    <div class="main-content">
+        <section id="dashboard" class="content-section">
+            <h2 style="color: var(--canada-red); margin-bottom: 2rem;">
+                <i class="fas fa-tachometer-alt"></i> Dashboard
+            </h2>
+
+            <div class="row mb-4">
+                <div class="col-md-3">
+                    <div class="stat-card">
+                        <i class="fas fa-calendar-check" style="color: var(--canada-red); font-size: 2rem;"></i>
+                        <h4 id="appointmentCount">0</h4>
+                        <p>Upcoming Appointments</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stat-card">
+                        <i class="fas fa-envelope" style="color: var(--canada-red); font-size: 2rem;"></i>
+                        <h4 id="messageCount">0</h4>
+                        <p>Messages Received</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stat-card">
+                        <i class="fas fa-check-circle" style="color: var(--canada-red); font-size: 2rem;"></i>
+                        <h4 id="completedCount">0</h4>
+                        <p>Completed Services</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stat-card">
+                        <i class="fas fa-clock" style="color: var(--canada-red); font-size: 2rem;"></i>
+                        <h4 id="accountAge">0</h4>
+                        <p>Days as Member</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h3 style="color: var(--canada-red); margin-bottom: 1.5rem;">Welcome!</h3>
+                <p>Thank you for choosing Crowngate Financial Group. Here's your personalized dashboard where you can manage your appointments, track your messages, and access all your consultation details.</p>
+                
+                <div class="alert alert-info mt-3">
+                    <i class="fas fa-info-circle"></i> <strong>Tip:</strong> Book a consultation to get started with your financial planning journey!
+                </div>
+
+                <a href="book-appointment.html" class="btn btn-canada-red">
+                    <i class="fas fa-calendar-plus"></i> Book New Appointment
+                </a>
+                <a href="contact.html" class="btn btn-outline-canada">
+                    <i class="fas fa-headset"></i> Contact Support
+                </a>
+            </div>
+
+            <div class="content-card">
+                <h3 style="color: var(--canada-red); margin-bottom: 1.5rem;">Quick Actions</h3>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <button class="btn btn-light w-100 text-start p-3" style="border: 1px solid var(--light-gray);">
+                            <i class="fas fa-phone" style="color: var(--canada-red);"></i>
+                            <strong class="ms-2">Call Consultant</strong>
+                        </button>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <a href="https://wa.me/16475551234" target="_blank" class="btn btn-light w-100 text-start p-3" style="border: 1px solid var(--light-gray);">
+                            <i class="fab fa-whatsapp" style="color: #25D366;"></i>
+                            <strong class="ms-2">WhatsApp Chat</strong>
+                        </a>
+                    </div>
+                    <div class="col-md-6">
+                        <a href="mailto:support@crowngatefinancialgroup.com" class="btn btn-light w-100 text-start p-3" style="border: 1px solid var(--light-gray);">
+                            <i class="fas fa-envelope" style="color: var(--canada-red);"></i>
+                            <strong class="ms-2">Send Email</strong>
+                        </a>
+                    </div>
+                    <div class="col-md-6">
+                        <a href="contact.html" class="btn btn-light w-100 text-start p-3" style="border: 1px solid var(--light-gray);">
+                            <i class="fas fa-comments" style="color: var(--canada-red);"></i>
+                            <strong class="ms-2">Live Support</strong>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="appointments" class="content-section" style="display: none;">
+            <h2 style="color: var(--canada-red); margin-bottom: 2rem;">
+                <i class="fas fa-calendar-alt"></i> My Appointments
+            </h2>
+
+            <div class="content-card">
+                <div id="appointmentsList">
+                    <p class="text-muted">You don't have any scheduled appointments yet. <a href="book-appointment.html">Book one now!</a></p>
+                </div>
+            </div>
+        </section>
+
+        <section id="portfolio" class="content-section" style="display: none;">
+            <h2 style="color: var(--canada-red); margin-bottom: 2rem;">
+                <i class="fas fa-briefcase"></i> Professional Consultation Portfolio
+            </h2>
+
+            <div class="row mb-4">
+                <div class="col-md-4">
+                    <div class="stat-card">
+                        <i class="fas fa-check-double" style="color: var(--canada-red); font-size: 2rem;"></i>
+                        <h4 id="completedServicesCount">0</h4>
+                        <p>Services Completed</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="stat-card">
+                        <i class="fas fa-dollar-sign" style="color: var(--canada-red); font-size: 2rem;"></i>
+                        <h4 id="investmentValue">$0</h4>
+                        <p>Total Investments</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="stat-card">
+                        <i class="fas fa-chart-line" style="color: var(--canada-red); font-size: 2rem;"></i>
+                        <h4 id="savingsValue">$0</h4>
+                        <p>Savings Achieved</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h4 style="color: var(--canada-red); margin-bottom: 1.5rem;">
+                    <i class="fas fa-star"></i> Your Service History
+                </h4>
+                <div id="serviceHistory">
+                    <p class="text-muted"><i class="fas fa-info-circle"></i> Your completed services will appear here once you've completed consultations.</p>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h4 style="color: var(--canada-red); margin-bottom: 1.5rem;">
+                    <i class="fas fa-file-alt"></i> Available Services
+                </h4>
+                <div class="row" id="availableServices">
+                    <div class="col-md-6 mb-3">
+                        <div class="card border-0" style="background: linear-gradient(135deg, #f5f5f5 0%, #eeeeee 100%); border-left: 4px solid var(--canada-red);">
+                            <div class="card-body">
+                                <h5 class="card-title text-canada-red"><i class="fas fa-chart-pie"></i> Financial Planning</h5>
+                                <p class="card-text">Comprehensive financial planning tailored to your goals and needs.</p>
+                                <a href="book-appointment.html" class="btn btn-sm btn-canada-red">Schedule Now</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="card border-0" style="background: linear-gradient(135deg, #f5f5f5 0%, #eeeeee 100%); border-left: 4px solid var(--canada-red);">
+                            <div class="card-body">
+                                <h5 class="card-title text-canada-red"><i class="fas fa-handshake"></i> Investment Advisory</h5>
+                                <p class="card-text">Expert guidance on investment strategies and portfolio management.</p>
+                                <a href="book-appointment.html" class="btn btn-sm btn-canada-red">Schedule Now</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="card border-0" style="background: linear-gradient(135deg, #f5f5f5 0%, #eeeeee 100%); border-left: 4px solid var(--canada-red);">
+                            <div class="card-body">
+                                <h5 class="card-title text-canada-red"><i class="fas fa-file-invoice-dollar"></i> Tax Planning</h5>
+                                <p class="card-text">Strategic tax planning to optimize your financial situation.</p>
+                                <a href="book-appointment.html" class="btn btn-sm btn-canada-red">Schedule Now</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="card border-0" style="background: linear-gradient(135deg, #f5f5f5 0%, #eeeeee 100%); border-left: 4px solid var(--canada-red);">
+                            <div class="card-body">
+                                <h5 class="card-title text-canada-red"><i class="fas fa-umbrella"></i> Risk Management</h5>
+                                <p class="card-text">Comprehensive risk assessment and mitigation strategies.</p>
+                                <a href="book-appointment.html" class="btn btn-sm btn-canada-red">Schedule Now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h4 style="color: var(--canada-red); margin-bottom: 1.5rem;">
+                    <i class="fas fa-award"></i> Achievements & Milestones
+                </h4>
+                <div class="row" id="achievements">
+                    <div class="col-md-6 mb-3">
+                        <div style="padding: 1rem; background: linear-gradient(135deg, #e8f5e9 0%, #f1f8e9 100%); border-left: 4px solid #4caf50; border-radius: 5px;">
+                            <h6 style="color: #2e7d32; margin-bottom: 0.5rem;"><i class="fas fa-trophy"></i> Account Created</h6>
+                            <p style="margin: 0; color: #558b2f; font-size: 0.9rem;" id="accountCreatedDate">Account created successfully</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div style="padding: 1rem; background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%); border-left: 4px solid #2196f3; border-radius: 5px;">
+                            <h6 style="color: #1565c0; margin-bottom: 0.5rem;"><i class="fas fa-check-circle"></i> First Appointment</h6>
+                            <p style="margin: 0; color: #283593; font-size: 0.9rem;">Book your first consultation</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Messages Section -->
+        <section id="messages" class="content-section" style="display: none; margin: 0 -2rem; padding: 0 2rem; background: #f9f9f9;">
+            <h2 style="color: var(--canada-red); margin-bottom: 2rem; margin-left: 0;">
+                <i class="fas fa-envelope"></i> Messages & Support
+            </h2>
+
+            <!-- Send Message Card -->
+            <div style="background: white; border-radius: 12px; padding: 2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-bottom: 2rem; margin-right: 0;">
+                <h4 style="color: var(--canada-red); margin-bottom: 1.5rem; font-weight: 600;">
+                    <i class="fas fa-pen-fancy"></i> Send a Message
+                </h4>
+                
+                <form id="dashboardMessageForm">
+                    <label for="dashboardMessage" style="display: block; font-weight: 600; color: #333; margin-bottom: 0.75rem;">Your Message</label>
+                    <textarea id="dashboardMessage" name="message" placeholder="Type your message here..." required style="width: 100%; height: 250px; padding: 15px; border: 2px solid #ddd; border-radius: 10px; font-size: 16px; font-family: Arial, sans-serif; resize: vertical; box-sizing: border-box; word-wrap: break-word; overflow-wrap: break-word; white-space: pre-wrap;"></textarea>
+                    
+                    <button type="submit" style="width: 100%; padding: 12px; margin-top: 1rem; background: linear-gradient(135deg, var(--canada-red) 0%, #a01730 100%); color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 16px;">
+                        <i class="fas fa-send"></i> Send Message
+                    </button>
+                </form>
+            </div>
+
+            <!-- Message History Card -->
+            <div style="background: white; border-radius: 12px; padding: 2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-right: 0;">
+                <h4 style="color: var(--canada-red); margin-bottom: 1.5rem; font-weight: 600;">
+                    <i class="fas fa-history"></i> Message History
+                </h4>
+                <div id="messagesList" style="min-height: 200px;">
+                    <p style="color: #999; text-align: center; padding: 2rem 0;">No messages yet</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Profile Section -->
+        <section id="profile" class="content-section" style="display: none;">
+            <h2 style="color: var(--canada-red); margin-bottom: 2rem;">
+                <i class="fas fa-user"></i> My Profile
+            </h2>
+
+            <div class="content-card">
+                <h4 style="color: var(--canada-red); margin-bottom: 1.5rem;">Profile Information</h4>
+                
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label"><strong>First Name</strong></label>
+                        <input type="text" class="form-control" id="profileFirstName" disabled>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label"><strong>Last Name</strong></label>
+                        <input type="text" class="form-control" id="profileLastName" disabled>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label"><strong>Email</strong></label>
+                        <input type="email" class="form-control" id="profileEmail" disabled>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label"><strong>Phone</strong></label>
+                        <input type="tel" class="form-control" id="profilePhone">
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label"><strong>Account Type</strong></label>
+                    <input type="text" class="form-control" id="profileAccountType" disabled>
+                </div>
+
+                <button class="btn btn-canada-red" onclick="updateProfile()">
+                    <i class="fas fa-save"></i> Save Changes
+                </button>
+            </div>
+        </section>
+    </div>
+</div>
+
+<script>
+// Check authentication (simple sessionStorage-based, works on any device/browser)
+window.addEventListener('load', function() {
+    // Check if user is logged in via sessionStorage
+    if (!sessionStorage.getItem('clientLoggedIn')) {
+        // Not logged in, redirect to login
+        window.location.href = 'login.html';
+        return;
+    }
+    loadClientDashboard();
+});
+
+function showSection(sectionId) {
+    // Hide all sections
+    document.querySelectorAll('.content-section').forEach(section => {
+        section.style.display = 'none';
+    });
+    
+    // Update nav links
+    document.querySelectorAll('.sidebar .nav-link').forEach(link => {
+        link.classList.remove('active');
+    });
+    
+    // Show selected section
+    const section = document.getElementById(sectionId);
+    if (section) {
+        section.style.display = 'block';
+    }
+    
+    // Update active nav link
+    event.target.closest('.nav-link').classList.add('active');
+}
+
+function loadClientDashboard() {
+    const clientEmail = sessionStorage.getItem('clientEmail');
+    const clientName = sessionStorage.getItem('clientName');
+    
+    // Load appointments
+    const appointments = JSON.parse(localStorage.getItem('appointments')) || [];
+    const clientAppointments = appointments.filter(a => a.email === clientEmail);
+    document.getElementById('appointmentCount').textContent = clientAppointments.length;
+    
+    // Calculate portfolio stats
+    const confirmedAppointments = clientAppointments.filter(a => a.status === 'confirmed').length;
+    document.getElementById('completedServicesCount').textContent = confirmedAppointments;
+    
+    // Load messages
+    const messages = JSON.parse(localStorage.getItem('customerMessages')) || [];
+    const clientMessages = messages.filter(m => m.email === clientEmail);
+    document.getElementById('messageCount').textContent = clientMessages.length;
+    
+    // Load profile
+    const clients = JSON.parse(localStorage.getItem('clients')) || [];
+    const signups = JSON.parse(localStorage.getItem('signups')) || [];
+    const clientData = [...clients, ...signups].find(c => c.email === clientEmail);
+    
+    if (clientData) {
+        document.getElementById('profileFirstName').value = clientData.firstName || '';
+        document.getElementById('profileLastName').value = clientData.lastName || '';
+        document.getElementById('profileEmail').value = clientData.email || '';
+        document.getElementById('profilePhone').value = clientData.phone || '';
+        document.getElementById('profileAccountType').value = clientData.accountType || '';
+        
+        // Set account created date
+        const createdDate = clientData.timestamp ? new Date(clientData.timestamp).toLocaleDateString() : new Date().toLocaleDateString();
+        document.getElementById('accountCreatedDate').textContent = `Member since ${createdDate}`;
+    }
+    
+    // Load appointments list
+    loadAppointmentsList();
+    
+    // Load messages list
+    loadMessagesList();
+}
+
+function loadAppointmentsList() {
+    const clientEmail = sessionStorage.getItem('clientEmail');
+    const appointments = JSON.parse(localStorage.getItem('appointments')) || [];
+    const clientAppointments = appointments.filter(a => a.email === clientEmail);
+    
+    const appointmentsList = document.getElementById('appointmentsList');
+    
+    if (clientAppointments.length === 0) {
+        appointmentsList.innerHTML = '<p class="text-muted">No appointments scheduled yet. <a href="book-appointment.html">Book one!</a></p>';
+        return;
+    }
+    
+    let html = '';
+    clientAppointments.forEach(appt => {
+        const statusBadge = appt.status === 'confirmed' ? '<span class="badge bg-success">Confirmed</span>' : '<span class="badge bg-warning">Pending</span>';
+        
+        html += `
+            <div class="message-box">
+                <h6>${appt.serviceType} ${statusBadge}</h6>
+                <p><strong>Date:</strong> ${appt.appointmentDate} at ${appt.appointmentTime}</p>
+                <p><strong>Type:</strong> ${appt.consultationType}</p>
+                <p>${appt.description}</p>
+            </div>
+        `;
+    });
+    
+    appointmentsList.innerHTML = html;
+}
+
+function loadMessagesList() {
+    const clientEmail = sessionStorage.getItem('clientEmail');
+    const messages = JSON.parse(localStorage.getItem('customerMessages')) || [];
+    const clientMessages = messages.filter(m => m.email === clientEmail);
+    
+    const messagesList = document.getElementById('messagesList');
+    
+    if (clientMessages.length === 0) {
+        messagesList.innerHTML = '<p class="text-muted">No messages yet. <a href="contact.html">Send a message!</a></p>';
+        return;
+    }
+    
+    let html = '';
+    clientMessages.forEach(msg => {
+        const replyBadge = msg.replied ? '<span class="badge bg-success float-end">Replied</span>' : '<span class="badge bg-warning float-end">Pending</span>';
+        
+        html += `
+            <div class="message-box">
+                <h6>Your Message ${replyBadge}</h6>
+                <p><strong>Sent:</strong> ${msg.timestamp}</p>
+                <p>${msg.message || msg.description}</p>
+                ${msg.reply ? `<div style="margin-top: 1rem; padding: 1rem; background: white; border-left: 4px solid var(--canada-red); border-radius: 4px;"><p><strong>Admin Reply:</strong></p><p>${msg.reply}</p><small class="text-muted">${msg.replyDate}</small></div>` : ''}
+            </div>
+        `;
+    });
+    
+    messagesList.innerHTML = html;
+}
+
+// Handle Dashboard Message Form Submission
+document.addEventListener('DOMContentLoaded', function() {
+    const messageForm = document.getElementById('dashboardMessageForm');
+    if (messageForm) {
+        messageForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const clientEmail = sessionStorage.getItem('clientEmail');
+            const clientName = sessionStorage.getItem('clientName') || 'Client';
+            const message = document.getElementById('dashboardMessage').value.trim();
+            
+            if (!message) {
+                alert('Please enter a message');
+                return;
+            }
+            
+            // Save message to localStorage for admin dashboard
+            let messages = JSON.parse(localStorage.getItem('customerMessages')) || [];
+            messages.push({
+                firstName: clientName.split(' ')[0],
+                lastName: clientName.split(' ')[1] || 'User',
+                email: clientEmail,
+                message: message,
+                timestamp: new Date().toLocaleString(),
+                replied: false,
+                id: Date.now()
+            });
+            localStorage.setItem('customerMessages', JSON.stringify(messages));
+            
+            // Clear form
+            document.getElementById('dashboardMessage').value = '';
+            
+            alert('Message sent successfully! Our team will respond shortly.');
+            
+            // Reload messages list
+            loadMessagesList();
+        });
+    }
+});
+
+function updateProfile() {
+    const clientEmail = sessionStorage.getItem('clientEmail');
+    const phone = document.getElementById('profilePhone').value;
+    
+    // Update client profile
+    let clients = JSON.parse(localStorage.getItem('clients')) || [];
+    const clientIndex = clients.findIndex(c => c.email === clientEmail);
+    
+    if (clientIndex !== -1) {
+        clients[clientIndex].phone = phone;
+        localStorage.setItem('clients', JSON.stringify(clients));
+    }
+    
+    alert('Profile updated successfully!');
+}
+
+function logout() {
+    sessionStorage.removeItem('clientLoggedIn');
+    sessionStorage.removeItem('clientEmail');
+    sessionStorage.removeItem('clientName');
+    window.location.href = 'login.html';
+}
+
+// Mobile Menu Toggle
+function toggleClientDashboardMenu() {
+    const sidebar = document.querySelector('.sidebar');
+    sidebar.classList.toggle('active');
+}
+
+// Close sidebar when a nav link is clicked (on mobile)
+document.addEventListener('click', function(event) {
+    const sidebar = document.querySelector('.sidebar');
+    const toggle = document.getElementById('mobileMenuToggle');
+    
+    if (window.innerWidth <= 768) {
+        if (sidebar.contains(event.target) && event.target.classList.contains('nav-link')) {
+            sidebar.classList.remove('active');
+        } else if (!sidebar.contains(event.target) && !toggle.contains(event.target)) {
+            sidebar.classList.remove('active');
+        }
+    }
+});
+
+// Toggle Sidebar for Mobile
+        function toggleClientDashboardMenu() {
+            const sidebar = document.querySelector('.sidebar');
+            if (sidebar) {
+                sidebar.classList.toggle('active');
+            }
+        }
+
+        /** * FIX: Section Switching Logic 
+         * This hides all content sections and only shows the one requested.
+         */
+        function showSection(sectionId) {
+            // 1. Get all sections with the class 'content-section'
+            const sections = document.querySelectorAll('.content-section');
+            
+            // 2. Hide every section
+            sections.forEach(section => {
+                section.style.setProperty('display', 'none', 'important');
+            });
+
+            // 3. Show the targeted section
+            const activeSection = document.getElementById(sectionId);
+            if (activeSection) {
+                activeSection.style.setProperty('display', 'block', 'important');
+                // Scroll to top of the content area for a clean transition
+                window.scrollTo(0, 0);
+            }
+
+            // 4. Handle Sidebar Active State Styling
+            const navLinks = document.querySelectorAll('.sidebar .nav-link');
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                // Check if the link is the one we just clicked
+                if (link.getAttribute('onclick') && link.getAttribute('onclick').includes(sectionId)) {
+                    link.classList.add('active');
+                }
+            });
+
+            // 5. Auto-close sidebar on mobile after a selection is made
+            if (window.innerWidth <= 768) {
+                const sidebar = document.querySelector('.sidebar');
+                if (sidebar) sidebar.classList.remove('active');
+            }
+        }
+
+        // Initialize: Ensure only the dashboard is visible when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            showSection('dashboard');
+        });
+
+        // Logout function placeholder
+        function logout() {
+            // Add your logout redirect or logic here
+            alert("Logging out...");
+            window.location.href = 'login.html';
+        }
+
+        // Resize handler to adjust layout
+        window.addEventListener('resize', function() {
+            const sidebar = document.querySelector('.sidebar');
+            if (window.innerWidth > 768 && sidebar) {
+                sidebar.classList.remove('active');
+            }
+        });
+
+    </script>
+
+</body>
+</html>

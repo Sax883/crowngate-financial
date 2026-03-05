@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crowngate Financial Group - Professional Financial Consultancy</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-light sticky-top">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="index.html">
+            <i class="fas fa-crown"></i> CROWNGATE
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
+                <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+                <li class="nav-item"><a class="nav-link" href="#testimonials">Testimonials</a></li>
+                <li class="nav-item"><a class="nav-link" href="pages/login.html">Login</a></li>
+                <li class="nav-item"><a class="nav-link" href="pages/signup.html">Sign Up</a></li>
+                <li class="nav-item"><a class="nav-link btn btn-primary btn-sm px-3" href="pages/book-appointment.html">Book Now</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Hero Section -->
+<section class="hero" id="home">
+    <div class="container text-center">
+        <h1 data-aos="fade-up">Your Financial Future Starts Here</h1>
+        <p data-aos="fade-up" data-aos-delay="200">Expert consultation and guidance for your financial goals</p>
+        <button class="btn btn-primary" data-aos="fade-up" data-aos-delay="400" onclick="document.getElementById('chatBtn').click()">Contact a Consultant</button>
+        <a href="pages/book-appointment.html" class="btn btn-primary" data-aos="fade-up" data-aos-delay="400">Book Appointment</a>
+    </div>
+</section>
+
+<!-- Verified Badge -->
+<div class="container text-center my-5">
+    <div class="verified-badge" data-aos="zoom-in">
+        <i class="fas fa-certificate"></i>
+        Certified & Verified Financial Consultancy
+    </div>
+</div>
+
+<!-- Services Section -->
+<section id="services" class="py-5">
+    <div class="container">
+        <div class="section-header">
+            <h2>Our Services</h2>
+            <p>Comprehensive financial solutions tailored for your needs</p>
+        </div>
+        <div class="row g-4 mt-4">
+            <div class="col-md-6 col-lg-3" data-aos="flip-left">
+                <div class="service-card">
+                    <div class="card-header">
+                        <i class="fas fa-dollar-sign"></i>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Financial Planning</h5>
+                        <p class="card-text">Comprehensive planning for your financial goals and retirement.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3" data-aos="flip-left" data-aos-delay="100">
+                <div class="service-card">
+                    <div class="card-header">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Investment Advisory</h5>
+                        <p class="card-text">Expert guidance on investment opportunities and portfolio management.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3" data-aos="flip-left" data-aos-delay="200">
+                <div class="service-card">
+                    <div class="card-header">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Risk Management</h5>
+                        <p class="card-text">Protect your assets with comprehensive risk mitigation strategies.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3" data-aos="flip-left" data-aos-delay="300">
+                <div class="service-card">
+                    <div class="card-header">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Tax Planning</h5>
+                        <p class="card-text">Strategic tax planning to minimize liabilities and maximize returns.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- About Section -->
+<section id="about" class="about-section bg-light py-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-6" data-aos="fade-right">
+                <img src="flag man.jpeg" alt="Our Team" class="about-image" style="width: 100%; height: auto; object-fit: cover;">
+            </div>
+            <div class="col-md-6" data-aos="fade-left">
+                <div class="about-content">
+                    <h2>About Crowngate Financial Group</h2>
+                    <p>With over 15 years of experience in the financial services industry, Crowngate Financial Group has been dedicated to providing professional and personalized financial consultation to clients across North America.</p>
+                    <h3>Why Choose Us?</h3>
+                    <ul>
+                        <li>Certified Financial Advisors</li>
+                        <li>Personalized Financial Plans</li>
+                        <li>24/7 Customer Support</li>
+                        <li>Transparent Pricing</li>
+                        <li>Proven Track Record</li>
+                        <li>Modern Technology Platform</li>
+                    </ul>
+                    <p>Our mission is to empower individuals and businesses with the knowledge and tools necessary to achieve their financial goals.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section id="team" class="py-5">
+    <div class="container">
+        <div class="section-header text-center mb-5">
+            <h2 data-aos="fade-up">Meet Our Experts</h2>
+            <p data-aos="fade-up" data-aos-delay="100">Our world-class consultants are here to guide your financial journey.</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-4" data-aos="fade-up">
+                <div class="card h-100 border-0 shadow-sm">
+                    <img src="Christopher Vaughn Financial Planner.jpeg" class="card-img-top" alt="Christopher Vaughn">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Christopher Vaughn</h5>
+                        <p class="text-primary fw-bold">Senior Financial Planner</p>
+                        <p class="card-text small">Specializing in retirement strategies and long-term wealth preservation for families and executives.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="card h-100 border-0 shadow-sm">
+                    <img src="Avery Collins Investment Specialist.jpeg" class="card-img-top" alt="Avery Collins">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Avery Collins</h5>
+                        <p class="text-primary fw-bold">Investment Specialist</p>
+                        <p class="card-text small">Expert in portfolio diversification and identifying emerging market opportunities for high-growth returns.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="card h-100 border-0 shadow-sm">
+                    <img src="Alex Bright Senior Advisor.jpeg" class="card-img-top" alt="Alex Bright">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Alex Bright</h5>
+                        <p class="text-primary fw-bold">Senior Advisor</p>
+                        <p class="card-text small">With decades of experience, Alex provides high-level strategic oversight for corporate financial structures.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4 offset-lg-2" data-aos="fade-up" data-aos-delay="300">
+                <div class="card h-100 border-0 shadow-sm">
+                    <img src="Stacey Herbert Tax Planing Expert.jpeg" class="card-img-top" alt="Stacey Herbert">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Stacey Herbert</h5>
+                        <p class="text-primary fw-bold">Tax Planning Expert</p>
+                        <p class="card-text small">Helping clients navigate complex tax laws to maximize efficiency and protect their bottom line.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="400">
+                <div class="card h-100 border-0 shadow-sm">
+                    <img src="Angel June Risk Management Consultant.jpeg" class="card-img-top" alt="Angel June">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Angel June</h5>
+                        <p class="text-primary fw-bold">Risk Management Consultant</p>
+                        <p class="card-text small">Dedicated to protecting client assets through rigorous risk assessment and mitigation strategies.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Consultant Section -->
+<section id="contact" class="contact-section py-5">
+    <div class="container">
+        <div class="section-header">
+            <h2>Get in Touch</h2>
+            <p>Choose your preferred method to connect with our experts</p>
+        </div>
+        <div class="row g-4 mt-4">
+            <div class="col-md-4" data-aos="zoom-in">
+                <div class="contact-box">
+                    <i class="fas fa-envelope"></i>
+                    <h5>Email Us</h5>
+                    <p>support@crowngatefinancialgroup.com</p>
+                    <a href="mailto:support@crowngatefinancialgroup.com" class="btn btn-canada-red btn-sm">Send Email</a>
+                </div>
+            </div>
+            <div class="col-md-4" data-aos="zoom-in" data-aos-delay="100">
+                <div class="contact-box">
+                    <i class="fab fa-whatsapp"></i>
+                    <h5>WhatsApp</h5>
+                    <p>Chat with us on WhatsApp</p>
+                    <a href="https://wa.me/16475551234?text=Hello%20Crowngate%20Financial" target="_blank" class="btn btn-canada-red btn-sm">Open WhatsApp</a>
+                </div>
+            </div>
+            <div class="col-md-4" data-aos="zoom-in" data-aos-delay="200">
+                <div class="contact-box">
+                    <i class="fas fa-phone"></i>
+                    <h5>Phone Support</h5>
+                    <p>+1 (647) 555-1234</p>
+                    <a href="tel:+16475551234" class="btn btn-canada-red btn-sm">Call Us</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials Section -->
+<section id="testimonials" class="py-5 bg-light">
+    <div class="container">
+        <div class="section-header">
+            <h2>What Our Clients Say</h2>
+            <p>Real testimonies from satisfied clients</p>
+        </div>
+        <div class="row g-4 mt-4">
+            <div class="col-md-6 col-lg-4" data-aos="fade-up">
+                <div class="testimonial-card">
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p>"Crowngate Financial Group transformed my financial situation. The team is professional, knowledgeable, and truly cares about their clients."</p>
+                    <div class="client-name">John Smith</div>
+                    <div class="client-title">Business Owner</div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="testimonial-card">
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p>"The financial planning service was exceptional. They created a comprehensive plan that I can actually follow and understand."</p>
+                    <div class="client-name">Sarah Johnson</div>
+                    <div class="client-title">Marketing Executive</div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="testimonial-card">
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p>"Outstanding service and support. They answered all my questions and provided strategies that significantly improved my investments."</p>
+                    <div class="client-name">Michael Chen</div>
+                    <div class="client-title">Retired Professional</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Map Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="section-header">
+            <h2>Find Us</h2>
+            <p>Our office locations in the USA</p>
+        </div>
+        <div id="map" data-aos="zoom-in"></div>
+        <div class="row g-4 mt-4">
+            <div class="col-md-4" data-aos="fade-up">
+                <div class="contact-box">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <h5>New York Office</h5>
+                    <p>123 Financial Street<br>New York, NY 10001</p>
+                </div>
+            </div>
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="contact-box">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <h5>Toronto Office</h5>
+                    <p>456 Maple Avenue<br>Toronto, ON M5V 3A8</p>
+                </div>
+            </div>
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="contact-box">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <h5>Los Angeles Office</h5>
+                    <p>789 Commerce Boulevard<br>Los Angeles, CA 90001</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Chat Widget -->
+<div class="chat-widget">
+    <button class="chat-button" id="chatBtn">
+        <i class="fas fa-comments"></i>
+    </button>
+    <div class="chat-window" id="chatWindow">
+        <div class="chat-header">
+            <div>Customer Support</div>
+            <button style="background: none; border: none; color: white; float: right; font-size: 1.2rem; cursor: pointer;" onclick="toggleChat()">&times;</button>
+        </div>
+        <div class="chat-messages" id="chatMessages"></div>
+        <div class="chat-input-area">
+            <input type="text" id="chatInput" placeholder="Type your message...">
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <h5>Crowngate Financial Group</h5>
+                <p>Professional financial consultation and advisory services for individuals and businesses.</p>
+                <div class="social-links">
+                    <a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <h5>Quick Links</h5>
+                <a href="index.html">Home</a><br>
+                <a href="#services">Services</a><br>
+                <a href="#about">About Us</a><br>
+                <a href="pages/contact.html">Contact</a>
+            </div>
+            <div class="col-md-4">
+                <h5>Contact Info</h5>
+                <p><i class="fas fa-envelope"></i> support@crowngatefinancialgroup.com</p>
+                <p><i class="fas fa-phone"></i> +1 (502) 492-7542</p>
+                <p><i class="fas fa-map-marker-alt"></i> New York, USA</p>
+            </div>
+        </div>
+        <div class="divider"></div>
+        <p>&copy; 2026 Crowngate Financial Group. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+    </div>
+</footer>
+
+<!-- Bootstrap & Libraries -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script src="assets/js/main.js"></script>
+
+</body>
+</html>

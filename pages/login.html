@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client Login - Crowngate Financial Group</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, var(--canada-red) 0%, #a01730 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .login-container {
+            background: var(--canada-white);
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            padding: 3rem 2rem;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .login-header h2 {
+            color: var(--canada-red);
+            font-weight: 700;
+            margin: 1rem 0;
+        }
+
+        .login-header p {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+
+        .form-control {
+            border: 1px solid #bdc3c7;
+            padding: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .form-control:focus {
+            border-color: var(--canada-red);
+            box-shadow: 0 0 0 0.2rem rgba(196, 30, 58, 0.25);
+        }
+
+        .btn-login {
+            background: linear-gradient(135deg, var(--canada-red) 0%, #a01730 100%);
+            color: var(--canada-white);
+            border: none;
+            padding: 0.75rem;
+            font-weight: 600;
+            margin-top: 1rem;
+        }
+
+        .btn-login:hover {
+            background: linear-gradient(135deg, #a01730 0%, var(--canada-red) 100%);
+            color: var(--canada-white);
+        }
+
+        .signup-link {
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .signup-link a {
+            color: var(--canada-red);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .signup-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<div class="login-container">
+    <div class="login-header">
+        <h2><i class="fas fa-crown"></i> CROWNGATE</h2>
+        <p>Financial Consultancy Platform</p>
+    </div>
+
+    <div id="errorAlert" class="alert alert-danger" style="display: none;"></div>
+
+    <form id="clientLoginForm" onsubmit="handleClientLogin(event)">
+        <div class="mb-3">
+            <label for="clientEmail" class="form-label"><strong>Email Address</strong></label>
+            <input type="email" class="form-control" id="clientEmail" placeholder="Enter your email" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="clientPassword" class="form-label"><strong>Password</strong></label>
+            <input type="password" class="form-control" id="clientPassword" placeholder="Enter your password" required>
+        </div>
+
+        <div class="form-check mb-3">
+            <input type="checkbox" class="form-check-input" id="clientRememberMe">
+            <label class="form-check-label" for="clientRememberMe">Remember me</label>
+        </div>
+
+        <button type="submit" class="btn btn-login w-100">
+            <i class="fas fa-sign-in-alt me-2"></i> Login
+        </button>
+    </form>
+
+    <div class="signup-link">
+        <p>Don't have an account? <a href="signup.html">Sign up here</a></p>
+    </div>
+
+    <hr>
+
+    <div style="text-align: center;">
+        <p style="color: #7f8c8d; font-size: 0.85rem; margin-bottom: 1rem;">Admin?</p>
+        <a href="../admin/login.html" class="btn btn-sm btn-outline-canada">Admin Dashboard</a>
+    </div>
+</div>
+
+<script>
+// Simple localStorage-based login (works on any device/browser, no external dependencies)
+window.handleClientLogin = function(event){
+    event.preventDefault();
+    const email = document.getElementById('clientEmail').value;
+    const password = document.getElementById('clientPassword').value;
+    const errorAlert = document.getElementById('errorAlert');
+
+    // Check localStorage for registered clients
+    const clients = JSON.parse(localStorage.getItem('clients')) || [];
+    const signups = JSON.parse(localStorage.getItem('signups')) || [];
+    const allUsers = [...clients, ...signups];
+    
+    const client = allUsers.find(c => c.email === email);
+    
+    if (client && client.password === password) {
+        // Successful login
+        sessionStorage.setItem('clientLoggedIn', 'true');
+        sessionStorage.setItem('clientEmail', email);
+        sessionStorage.setItem('clientName', client.firstName + ' ' + client.lastName);
+        
+        // Remember me option
+        if (document.getElementById('clientRememberMe').checked) {
+            localStorage.setItem('clientEmail', email);
+        }
+        
+        errorAlert.style.display = 'none';
+        window.location.href = 'client-dashboard.html';
+    } else {
+        // Failed login
+        errorAlert.style.display = 'block';
+        errorAlert.innerHTML = '<i class="fas fa-exclamation-circle"></i> Invalid email or password!';
+    }
+};
+
+// Check if already logged in
+window.addEventListener('load', function() {
+    if (sessionStorage.getItem('clientLoggedIn')) {
+        window.location.href = 'client-dashboard.html';
+    }
+    
+    // Pre-fill email if remembered
+    const savedEmail = localStorage.getItem('clientEmail');
+    if (savedEmail) {
+        document.getElementById('clientEmail').value = savedEmail;
+        document.getElementById('clientRememberMe').checked = true;
+    }
+});
+</script>

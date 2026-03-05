@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - Crowngate Financial Group</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-light sticky-top">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="../index.html">
+            <i class="fas fa-crown"></i> CROWNGATE
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="../index.html#home">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="../index.html#services">Services</a></li>
+                <li class="nav-item"><a class="nav-link" href="../index.html#about">About</a></li>
+                <li class="nav-item"><a class="nav-link" href="../index.html#testimonials">Testimonials</a></li>
+                <li class="nav-item"><a class="nav-link btn btn-primary btn-sm px-3" href="book-appointment.html">Book Now</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Sign Up Section -->
+<section class="py-5" style="min-height: 80vh; display: flex; align-items: center;">
+    <div class="container">
+        <div class="signup-form">
+            <h2><i class="fas fa-user-plus"></i> Create Your Account</h2>
+            <p class="text-center text-muted mb-4">Join thousands of satisfied clients</p>
+            
+            <form id="signupForm" method="POST">
+                <div class="mb-3">
+                    <label for="firstName" class="form-label">First Name *</label>
+                    <input type="text" class="form-control" id="firstName" name="firstName" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="lastName" class="form-label">Last Name *</label>
+                    <input type="text" class="form-control" id="lastName" name="lastName" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email Address *</label>
+                    <input type="email" class="form-control" id="email" name="email" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="phone" class="form-label">Phone Number *</label>
+                    <input type="tel" class="form-control" id="phone" name="phone" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password *</label>
+                    <input type="password" class="form-control" id="password" name="password" required>
+                    <small class="text-muted">Minimum 8 characters</small>
+                </div>
+
+                <div class="mb-3">
+                    <label for="confirmPassword" class="form-label">Confirm Password *</label>
+                    <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="accountType" class="form-label">Account Type *</label>
+                    <select class="form-select" id="accountType" name="accountType" required>
+                        <option value="">Select Account Type</option>
+                        <option value="individual">Individual</option>
+                        <option value="business">Business</option>
+                        <option value="corporate">Corporate</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="interests" class="form-label">Areas of Interest *</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="financial" name="interests" value="Financial Planning">
+                        <label class="form-check-label" for="financial">Financial Planning</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="investment" name="interests" value="Investment Advisory">
+                        <label class="form-check-label" for="investment">Investment Advisory</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="tax" name="interests" value="Tax Planning">
+                        <label class="form-check-label" for="tax">Tax Planning</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="risk" name="interests" value="Risk Management">
+                        <label class="form-check-label" for="risk">Risk Management</label>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="message" class="form-label">Tell Us About Yourself</label>
+                    <textarea class="form-control" id="message" name="message" rows="3" placeholder="Your financial goals and background..."></textarea>
+                </div>
+
+                <div class="mb-3 form-check">
+                    <input type="checkbox" class="form-check-input" id="terms" name="terms" required>
+                    <label class="form-check-label" for="terms">
+                        I agree to the <a href="#" style="color: var(--canada-red);">Terms and Conditions</a> and <a href="#" style="color: var(--canada-red);">Privacy Policy</a>
+                    </label>
+                </div>
+
+                <button type="submit" class="btn btn-canada-red w-100 mb-3">Create Account</button>
+            </form>
+
+            <p class="text-center">
+                Already have an account? <a href="login.html" style="color: var(--canada-red); font-weight: 600;">Login here</a>
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <h5>Crowngate Financial Group</h5>
+                <p>Professional financial consultation and advisory services for individuals and businesses.</p>
+            </div>
+            <div class="col-md-4">
+                <h5>Quick Links</h5>
+                <a href="../index.html">Home</a><br>
+                <a href="../index.html#services">Services</a><br>
+                <a href="../index.html#about">About Us</a>
+            </div>
+            <div class="col-md-4">
+                <h5>Contact Info</h5>
+                <p><i class="fas fa-envelope"></i> support@crowngatefinancialgroup.com</p>
+                <p><i class="fas fa-phone"></i> +1 (647) 555-1234</p>
+            </div>
+        </div>
+        <div class="divider"></div>
+        <p>&copy; 2026 Crowngate Financial Group. All rights reserved.</p>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../assets/js/main.js"></script>
+<script>
+    // Password validation and signup
+    document.getElementById('signupForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const password = document.getElementById('password').value;
+        const confirmPassword = document.getElementById('confirmPassword').value;
+
+        if (password !== confirmPassword) {
+            alert('Passwords do not match!');
+            return;
+        }
+
+        if (password.length < 8) {
+            alert('Password must be at least 8 characters long!');
+            return;
+        }
+
+        // Get form data
+        const formData = new FormData(this);
+        const data = {
+            firstName: formData.get('firstName'),
+            lastName: formData.get('lastName'),
+            email: formData.get('email'),
+            phone: formData.get('phone'),
+            password: formData.get('password'),
+            accountType: formData.get('accountType'),
+            interests: formData.getAll('interests'),
+            message: formData.get('message'),
+            timestamp: new Date().toLocaleString(),
+            status: 'pending',
+            id: Date.now()
+        };
+
+        // Store account data in localStorage
+        let clients = JSON.parse(localStorage.getItem('clients')) || [];
+        clients.push(data);
+        localStorage.setItem('clients', JSON.stringify(clients));
+
+        // Also store in signups for admin tracking
+        let signups = JSON.parse(localStorage.getItem('signups')) || [];
+        signups.push(data);
+        localStorage.setItem('signups', JSON.stringify(signups));
+
+        // Set session to auto-login
+        sessionStorage.setItem('clientLoggedIn', 'true');
+        sessionStorage.setItem('clientEmail', data.email);
+        sessionStorage.setItem('clientName', data.firstName + ' ' + data.lastName);
+
+        alert('Account created successfully! Redirecting to your dashboard...');
+        window.location.href = 'client-dashboard.html';
+    });
+</script>
+</body>
+</html>
