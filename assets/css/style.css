@@ -698,14 +698,33 @@ footer .divider {
     padding: 10px;
 }
 
+/* FIX: Specific Sidebar and Mobile Menu visibility */
+.user-sidebar a {
+    color: #ffffff !important;
+    padding: 15px 20px;
+    display: block !important;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    background: transparent;
+}
+
+.user-sidebar a:hover {
+    background: rgba(255,255,255,0.1) !important;
+}
+
 @media (max-width: 768px) {
     .user-dashboard-main {
         flex-direction: column;
     }
     .user-sidebar {
-        width: 100%;
-        height: auto;
-        position: relative;
+        width: 100% !important;
+        height: auto !important;
+        position: relative !important;
+        display: block !important;
+        z-index: 9999 !important;
+    }
+    .user-sidebar.active {
+        display: block !important;
     }
 }
 
