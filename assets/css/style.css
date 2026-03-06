@@ -488,12 +488,23 @@ footer .divider {
         margin: 0.5rem 0;
     }
 
-    /* FIX: Force Customer Support to fit mobile width */
-    .chat-window, #customer-support-widget, .support-sidebar {
-        width: calc(100vw - 40px) !important;
+    /* FIX: Force Customer Support to fit mobile width and centered */
+    .chat-window {
+        width: 90vw !important;
+        position: fixed !important;
+        right: 5vw !important;
+        left: 5vw !important;
+        bottom: 100px !important;
+        height: 60vh !important;
+        max-height: 600px !important;
+        margin: 0 auto !important;
+        z-index: 10000 !important;
+    }
+
+    #chatBtn {
+        bottom: 20px !important;
         right: 20px !important;
-        left: 20px !important;
-        max-height: 80vh;
+        z-index: 10001 !important;
     }
 
     #map {
@@ -518,15 +529,6 @@ footer .divider {
         width: 50px;
         height: 50px;
         font-size: 1.2rem;
-    }
-
-    /* FIX: Specific mobile support widget layout */
-    .chat-window, #customer-support-widget, .support-sidebar {
-        width: calc(100vw - 20px) !important;
-        right: 10px !important;
-        left: 10px !important;
-        bottom: 70px !important;
-        max-height: 70vh !important;
     }
 
     .chat-input-area input {
@@ -732,7 +734,7 @@ footer .divider {
     user-select: none;
 }
 
-/* Highlight style for any selected item (FIX: Ensures highlighting works for all categories) */
+/* Highlight style for any selected item */
 .wf-opt.selected, .stack-option.selected, .lifestyle-opt.selected, .cat-item.selected { 
     border: 2px solid var(--pro-blue) !important; 
     background: var(--pro-blue) !important; 
