@@ -1,8 +1,10 @@
 :root {
-    --canada-red: #007BFF;        /* Professional Royal Blue */
+    --canada-red: #007BFF;         /* Professional Royal Blue */
     --canada-white: #FFFFFF;
     --dark-gray: #2C3E50;
     --light-gray: #ECF0F1;
+    --pro-blue: #003366; 
+    --pro-blue-hover: #004a94;
 }
 
 * {
@@ -354,7 +356,7 @@ footer .divider {
     font-size: 1.5rem;
 }
 
-/* Chat Widget */
+/* Chat Widget & Support Fixes */
 .chat-widget {
     position: fixed;
     bottom: 20px;
@@ -486,10 +488,12 @@ footer .divider {
         margin: 0.5rem 0;
     }
 
-    .chat-window {
-        width: calc(100vw - 30px);
-        right: 15px;
-        left: 15px;
+    /* FIX: Force Customer Support to fit mobile width */
+    .chat-window, #customer-support-widget, .support-sidebar {
+        width: calc(100vw - 40px) !important;
+        right: 20px !important;
+        left: 20px !important;
+        max-height: 80vh;
     }
 
     #map {
@@ -516,10 +520,17 @@ footer .divider {
         font-size: 1.2rem;
     }
 
-    .chat-window {
-        width: calc(100vw - 20px);
-        right: 10px;
-        left: 10px;
+    /* FIX: Specific mobile support widget layout */
+    .chat-window, #customer-support-widget, .support-sidebar {
+        width: calc(100vw - 20px) !important;
+        right: 10px !important;
+        left: 10px !important;
+        bottom: 70px !important;
+        max-height: 70vh !important;
+    }
+
+    .chat-input-area input {
+        font-size: 16px !important; 
     }
 
     footer {
@@ -601,6 +612,7 @@ footer .divider {
     font-weight: 700;
     font-size: 1.2rem;
 }
+
 /* Team Section Styling */
 #team .card {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -608,7 +620,6 @@ footer .divider {
     overflow: hidden;
 }
 
-/* Hover effect for desktop */
 @media (min-width: 992px) {
     #team .card:hover {
         transform: translateY(-10px);
@@ -616,35 +627,32 @@ footer .divider {
     }
 }
 
-/* Base Image Styling */
 #team .card-img-top {
     object-fit: cover;
     object-position: top;
     width: 100%;
 }
 
-/* Desktop Image Height (Large screens) */
 @media (min-width: 768px) {
     #team .card-img-top {
         height: 350px;
     }
 }
 
-/* Mobile Image Height (Phones) */
 @media (max-width: 767px) {
     #team .card-img-top {
-        height: 400px; /* Slightly taller on mobile for better framing */
+        height: 400px;
     }
     
     #team .section-header h2 {
-        font-size: 1.8rem; /* Shrink title slightly for small screens */
+        font-size: 1.8rem;
     }
 }
+
 /* ==========================================================================
    USER DASHBOARD ONLY (Fixes vertical text and column overlap)
    ========================================================================== */
 
-/* This wrapper prevents the sidebar from covering the content area */
 .user-dashboard-main {
     display: flex !important;
     min-height: 100vh;
@@ -652,7 +660,6 @@ footer .divider {
     align-items: stretch;
 }
 
-/* Specific styling for the user sidebar */
 .user-sidebar {
     width: 280px;
     min-width: 280px;
@@ -663,7 +670,6 @@ footer .divider {
     z-index: 10;
 }
 
-/* This creates the 'rectangle' runway so text moves left-to-right */
 .user-content-area {
     flex-grow: 1;
     padding: 40px;
@@ -671,7 +677,6 @@ footer .divider {
     overflow-x: hidden;
 }
 
-/* Fixes the "One word per line" skipping issue */
 .user-content-area h2, 
 .user-content-area p, 
 .user-content-area .tip-box {
@@ -682,7 +687,6 @@ footer .divider {
     margin-bottom: 1rem;
 }
 
-/* Ensures the message input is a wide rectangle */
 #message-input, .user-textarea {
     width: 100% !important;
     min-height: 150px;
@@ -692,7 +696,6 @@ footer .divider {
     padding: 10px;
 }
 
-/* Mobile responsive fix for the user dashboard only */
 @media (max-width: 768px) {
     .user-dashboard-main {
         flex-direction: column;
@@ -703,49 +706,11 @@ footer .divider {
         position: relative;
     }
 }
-/* --- MOBILE CHAT WIDGET FIX --- */
-@media screen and (max-width: 480px) {
-    /* Make the chat window fit the phone width */
-    .chat-window {
-        width: 90% !important;   /* Stretches to 90% of the screen */
-        right: 5% !important;    /* Even 5% gap on the right */
-        left: 5% !important;     /* Even 5% gap on the left */
-        bottom: 80px !important; /* Positions it above the chat button */
-        max-height: 70vh !important; /* Prevents it from being too tall */
-    }
 
-    /* Ensure the input area doesn't overflow */
-    .chat-input-area {
-        display: flex;
-        padding: 10px;
-    }
-
-    .chat-input-area input {
-        width: 75% !important;
-        font-size: 16px !important; /* Prevents auto-zoom on iPhones */
-    }
-
-    .chat-input-area button {
-        width: 25% !important;
-    }
-}
-/* --- Professional Blue Styling --- */
-:root {
-    --pro-blue: #003366; 
-    --pro-blue-hover: #004a94;
-}
-
+/* --- Employment & Workflow --- */
 .employment-section { padding: 60px 20px; text-align: center; background: #fff; }
 .pro-blue-divider { width: 50px; height: 4px; background: var(--pro-blue); margin: 0 auto 20px; }
 .btn-pro-blue { background: var(--pro-blue); color: #fff; border: none; padding: 15px 40px; border-radius: 4px; font-weight: bold; cursor: pointer; }
-
-/* --- Support Fix for Mobile --- */
-#customer-support-widget, .support-sidebar {
-    right: 15px !important;
-    left: auto !important;
-    max-width: 90vw !important;
-    bottom: 20px !important;
-}
 
 /* --- Workflow Modal --- */
 .workflow-overlay { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.8); z-index: 10000; align-items: center; justify-content: center; }
@@ -753,15 +718,39 @@ footer .divider {
 .wf-step { display: none; }
 .wf-step.active { display: block; }
 
-.wf-opt { width: 100%; padding: 15px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 8px; background: #fff; cursor: pointer; text-align: left; transition: 0.2s; }
-.wf-opt.selected { border: 2px solid var(--pro-blue); background: #f0f7ff; color: var(--pro-blue); font-weight: bold; }
+/* Global fix for ALL selectable options (Job Types, Lifestyle, Experience) */
+.wf-opt, .stack-option, .lifestyle-opt, .cat-item { 
+    width: 100%; 
+    padding: 15px; 
+    margin-bottom: 10px; 
+    border: 1px solid #ddd; 
+    border-radius: 8px; 
+    background: #fff; 
+    cursor: pointer !important; 
+    text-align: center; 
+    transition: 0.2s; 
+    user-select: none;
+}
+
+/* Highlight style for any selected item (FIX: Ensures highlighting works for all categories) */
+.wf-opt.selected, .stack-option.selected, .lifestyle-opt.selected, .cat-item.selected { 
+    border: 2px solid var(--pro-blue) !important; 
+    background: var(--pro-blue) !important; 
+    color: white !important; 
+    font-weight: bold; 
+}
 
 .btn-wf-next { width: 100%; padding: 15px; background: var(--pro-blue); color: #fff; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 20px; }
 .btn-wf-next:disabled { background: #ccc; cursor: not-allowed; }
 
 .cat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; max-height: 250px; overflow-y: auto; margin-top: 15px; border: 1px solid #eee; padding: 10px; }
-.cat-item { padding: 10px; border: 1px solid #eee; font-size: 13px; cursor: pointer; border-radius: 4px; }
-.cat-item.selected { background: var(--pro-blue); color: white; border-color: var(--pro-blue); }
+
+.cat-item { 
+    padding: 10px; 
+    border: 1px solid #eee; 
+    font-size: 13px; 
+    border-radius: 4px; 
+}
 
 .hr-link { display: block; padding: 15px; margin-top: 10px; border-radius: 8px; text-decoration: none; color: #fff; font-weight: bold; }
 .hr-link.mail { background: var(--pro-blue); }

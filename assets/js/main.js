@@ -132,8 +132,23 @@ const allCategories = [
     "Tax Consulting", "Data Science", "Web Development", "Cyber Security", "Project Management",
     "Customer Support", "Digital Marketing", "Content Writing", "Virtual Assistant", "Legal Advice",
     "Sales Strategy", "Human Resources", "UI/UX Design", "Business Development", "Forex Trading",
-    "Wealth Management", "Compliance Officer", "Loan Officer", "Actuary", "Stock Analysis"
-]; // Note: Ensure your HTML has a container for these
+    "Wealth Management", "Compliance Officer", "Loan Officer", "Actuary", "Stock Analysis",
+    "Graphic Design", "Mobile App Dev", "SEO Specialist", "Social Media Manager", "Copywriter",
+    "Translator", "Data Entry", "Online Tutor", "Video Editor", "Product Manager",
+    "Cloud Architect", "Network Engineer", "Database Admin", "QA Engineer", "DevOps",
+    "E-commerce Manager", "Brand Strategist", "Market Researcher", "Public Relations", "Event Planner",
+    "Recruiter", "Office Manager", "Payroll Specialist", "Bookkeeper", "Internal Auditor",
+    "Operations Manager", "Supply Chain Analyst", "Logistics Coordinator", "Inventory Manager", "Buyer",
+    "Systems Analyst", "Technical Writer", "UX Researcher", "Illustrator", "Motion Designer",
+    "Email Marketer", "Growth Hacker", "Affiliate Manager", "Community Manager", "Lead Generator",
+    "Sales Representative", "Account Executive", "Customer Success", "Technical Support", "Help Desk",
+    "Security Analyst", "Ethical Hacker", "IT Consultant", "Software Architect", "Full Stack Dev",
+    "Backend Developer", "Frontend Developer", "Game Developer", "AI Engineer", "ML Specialist",
+    "Blockchain Developer", "Solidity Engineer", "Cryptographer", "Quantitative Analyst", "Trader",
+    "Estate Planner", "Financial Planner", "Underwriter", "Claims Adjuster", "Paralegal",
+    "Medical Transcription", "Healthcare Admin", "Insurance Agent", "Travel Agent", "Real Estate Agent",
+    "Interior Designer", "Architectural Drafter", "CAD Technician", "Civil Engineer", "Mechanical Engineer"
+]; 
 
 let selectedCats = [];
 
@@ -142,6 +157,8 @@ function openWorkflow() {
     if (modal) {
         modal.style.display = 'block';
         loadCategories();
+        nextStep(1); 
+        selectedCats = []; 
     }
 }
 
@@ -151,12 +168,10 @@ function closeWorkflow() {
 }
 
 function nextStep(stepNumber) {
-    // Hide all steps
     document.querySelectorAll('.step').forEach(step => {
         step.style.display = 'none';
         step.classList.remove('active');
     });
-    // Show target step
     const target = document.getElementById('step' + stepNumber);
     if (target) {
         target.style.display = 'block';
@@ -164,10 +179,17 @@ function nextStep(stepNumber) {
     }
 }
 
+// UPDATED: This handles highlighting for Lifestyle, Canada, Experience, etc.
 function selectOnly(el) {
-    const options = el.parentElement.querySelectorAll('.stack-option');
+    const stepParent = el.closest('.step');
+    // Finds all possible selectable options in this specific step
+    const options = stepParent.querySelectorAll('.wf-opt, .stack-option, .lifestyle-opt'); 
+    
     options.forEach(opt => opt.classList.remove('selected'));
     el.classList.add('selected');
+
+    const nextBtn = stepParent.querySelector('.btn-wf-next');
+    if(nextBtn) nextBtn.disabled = false;
 }
 
 function updateSalary(val) {
@@ -179,7 +201,7 @@ function loadCategories() {
     const container = document.getElementById('categoryContainer');
     if (!container) return;
     container.innerHTML = allCategories.sort().map(cat => `
-        <div class="stack-option" onclick="toggleCategory(this, '${cat}')">${cat}</div>
+        <div class="cat-item" onclick="toggleCategory(this, '${cat}')">${cat}</div>
     `).join('');
 }
 
@@ -192,21 +214,36 @@ function toggleCategory(el, cat) {
             el.classList.add('selected');
             selectedCats.push(cat);
         } else {
-            alert("Please select only 3 categories.");
+            alert("Please select exactly 3 categories.");
         }
     }
+
     const counter = document.getElementById('catCount');
     if (counter) counter.innerText = selectedCats.length;
+
+    const nextBtn = document.querySelector('.step.active .btn-wf-next'); 
+    if(nextBtn) nextBtn.disabled = (selectedCats.length !== 3);
 }
 
-// --- Initialization on Load ---
+function contactHR(type) {
+    const phone = "+1234567890"; 
+    const email = "hr@remotejobs.io"; 
+    
+    if (type === 'whatsapp') {
+        window.open(`https://wa.me/${phone.replace('+', '')}`, '_blank');
+    } else if (type === 'email') {
+        window.location.href = `mailto:${email}`;
+    } else if (type === 'phone') {
+        window.location.href = `tel:${phone}`;
+    }
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     initMap();
     validateForm('appointmentForm');
     validateForm('signupForm');
     validateForm('contactForm');
 
-    // Handle smooth scrolling
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             e.preventDefault();
@@ -216,7 +253,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-// Close modal if user clicks outside
 window.onclick = function(event) {
     const modal = document.getElementById('jobModal');
     if (event.target == modal) closeWorkflow();

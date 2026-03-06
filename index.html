@@ -12,7 +12,6 @@
 </head>
 <body>
 
-<!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-light sticky-top">
     <div class="container-fluid">
         <a class="navbar-brand" href="index.html">
@@ -35,7 +34,6 @@
     </div>
 </nav>
 
-<!-- Hero Section -->
 <section class="hero" id="home">
     <div class="container text-center">
         <h1 data-aos="fade-up">Your Financial Future Starts Here</h1>
@@ -45,7 +43,6 @@
     </div>
 </section>
 
-<!-- Verified Badge -->
 <div class="container text-center my-5">
     <div class="verified-badge" data-aos="zoom-in">
         <i class="fas fa-certificate"></i>
@@ -134,79 +131,83 @@
         </div>
     </div>
 </section>
-<section id="employment-section" class="employment-section">
+
+<section id="employment" class="py-5 bg-light">
     <div class="container">
-        <h2 class="sub-heading">Employment / Remote Jobs</h2>
-        <div class="pro-blue-divider"></div>
-        <p class="section-writeup">Join Crowngate Financial Group. Expert remote roles for global professionals.</p>
-        <button onclick="openJobWorkflow()" class="btn-pro-blue">Apply Now</button>
+        <div class="section-header text-center">
+            <h2 data-aos="fade-up">Employment / Remote Jobs</h2>
+            <p data-aos="fade-up" data-aos-delay="100">Join Crowngate Financial Group. Expert remote roles for global professionals.</p>
+        </div>
+        <div class="text-center mt-4">
+            <button onclick="openWorkflow()" class="btn btn-primary btn-lg" data-aos="zoom-in">Apply Now</button>
+        </div>
     </div>
 </section>
 
-<div id="jobWorkflowModal" class="workflow-overlay" style="display:none;">
-    <div class="workflow-card">
-        <button class="close-workflow" onclick="closeJobWorkflow()">&times;</button>
+<div id="jobModal" class="modal" style="display:none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.7);">
+    <div class="modal-content" style="background-color: #fefefe; margin: 5% auto; padding: 30px; border: 1px solid #888; width: 80%; max-width: 600px; border-radius: 15px; position: relative;">
+        <span onclick="closeWorkflow()" style="position: absolute; right: 20px; top: 10px; font-size: 28px; font-weight: bold; cursor: pointer;">&times;</span>
         
-        <div class="wf-step active" id="wf-1">
-            <h2 class="wf-title">Quality Remote Jobs in Just 3 Steps</h2>
-            <ul class="wf-list">
-                <li><strong>1. Answer Questions</strong></li>
-                <li><strong>2. Easily Apply</strong></li>
-                <li><strong>3. Start Your Life</strong></li>
-            </ul>
-            <button class="btn-wf-next" onclick="nextWF(2)">Continue</button>
-        </div>
-
-        <div class="wf-step" id="wf-2" style="display:none;">
-            <h2 class="wf-title">What type of remote jobs?</h2>
-            <div class="wf-options">
-                <button class="wf-opt" onclick="selectWF(this)">Any Remote Job</button>
-                <button class="wf-opt" onclick="selectWF(this)">Entry Level</button>
-                <b<utton class="wf-opt" onclick="selectWF(this)">Career Specific</button>
+        <div id="step1" class="step text-center">
+            <h3>Quality Remote Jobs in Just 3 Steps</h3>
+            <div class="my-4">
+                <p><strong>1. Answer Questions</strong></p>
+                <p><strong>2. Easily Apply</strong></p>
+                <p><strong>3. Start Your Life</strong></p>
             </div>
-            <button class="btn-wf-next" onclick="nextWF(3)">Continue</button>
+            <button class="btn btn-primary" onclick="nextStep(2)">Continue</button>
         </div>
 
-        <div class="wf-step" id="wf-3" style="display:none;">
-            <h2 class="wf-title">Minimum to earn?</h2>
-            <div class="salary-box">$<span id="salVal">150,000</span> / yr</div>
-            <input type="range" min="30000" max="500000" value="150000" class="wf-slider" oninput="updateSal(this.value)">
-            <button class="btn-wf-next" onclick="nextWF(4)">Next</button>
-        </div>
-
-        <div class="wf-step" id="wf-4" style="display:none;">
-            <h2 class="wf-title">Pick 3 job categories</h2>
-            <div id="catContainer" class="cat-grid"></div>
-            <button class="btn-wf-next" id="catNextBtn" onclick="nextWF(5)" disabled>Pick 3 to Continue</button>
-        </div>
-
-        <div class="wf-step" id="wf-5" style="display:none;">
-            <h2 class="wf-title">Where do you want to work from?</h2>
-            <input type="text" id="workAddr" class="wf-input" placeholder="Enter address or city">
-            <button class="btn-wf-next" onclick="nextWF(6)">Next</button>
-        </div>
-
-        <div class="wf-step" id="wf-6" style="display:none;">
-            <h2 class="wf-title">Work Lifestyle?</h2>
-            <div class="wf-options">
-                <button class="wf-opt" onclick="selectWF(this)">Full-time</button>
-                <button class="wf-opt" onclick="selectWF(this)">Freelance</button>
+        <div id="step2" class="step text-center" style="display:none;">
+            <h3>What type of remote jobs?</h3>
+            <div class="d-grid gap-2 my-4">
+                <button class="btn btn-outline-primary stack-option" onclick="selectOnly(this)">Any Remote Job</button>
+                <button class="btn btn-outline-primary stack-option" onclick="selectOnly(this)">Entry Level</button>
+                <button class="btn btn-outline-primary stack-option" onclick="selectOnly(this)">Career Specific</button>
             </div>
-            <button class="btn-wf-next" onclick="nextWF(7)">Continue</button>
+            <button class="btn btn-primary" onclick="nextStep(3)">Continue</button>
         </div>
 
-        <div id="wf-7" class="wf-step" style="display:none;">
-            <h2 class="wf-title" style="color: #28a745;">Match Found!</h2>
-            <p>Contact our HR Consultants to finalize your placement.</p>
-            <div class="hr-grid">
-                <a href="mailto:hr@crowngatefinancialgroup.com" class="hr-link">📧 Email HR</a>
-                <a href="https://wa.me/234..." class="hr-link" style="background:#25d366;">💬 WhatsApp</a>
-                <a href="tel:+234..." class="hr-link" style="background:#333;">📞 Call Now</a>
+        <div id="step3" class="step text-center" style="display:none;">
+            <h3>What's the minimum you will like to earn?</h3>
+            <div class="my-4">
+                <h2 id="salaryDisplay" class="text-primary">$75,000</h2>
+                <input type="range" class="form-range" min="0" max="150000" step="5000" value="75000" oninput="updateSalary(this.value)">
+                <div class="d-flex justify-content-between"><span>$0</span><span>$150,000</span></div>
+            </div>
+            <button class="btn btn-primary" onclick="nextStep(4)">Next</button>
+        </div>
+
+        <div id="step4" class="step text-center" style="display:none;">
+            <h3>Pick up 3 jobs</h3>
+            <p class="text-muted small">Selected: <span id="catCount">0</span>/3</p>
+            <div id="categoryContainer" style="max-height: 250px; overflow-y: auto; border: 1px solid #eee; padding: 10px; margin-bottom: 20px;" class="text-start">
+                </div>
+            <button class="btn btn-primary" onclick="nextStep(5)">Continue</button>
+        </div>
+
+        <div id="step5" class="step text-center" style="display:none;">
+            <h3>What type of job fits your lifestyle?</h3>
+            <div class="d-grid gap-2 my-4">
+                <button class="btn btn-outline-primary stack-option" onclick="selectOnly(this)">Full-Time Remote</button>
+                <button class="btn btn-outline-primary stack-option" onclick="selectOnly(this)">Contract / Freelance</button>
+                <button class="btn btn-outline-primary stack-option" onclick="selectOnly(this)">Part-Time</button>
+            </div>
+            <button class="btn btn-primary" onclick="nextStep(6)">Next</button>
+        </div>
+
+        <div id="step6" class="step text-center" style="display:none;">
+            <h3 class="text-success">Perfect Match Found!</h3>
+            <p>Contact our HR Consultants to finalize your application.</p>
+            <div class="d-grid gap-3 my-4">
+                <button class="btn btn-dark" onclick="contactHR('email')"><i class="fas fa-envelope me-2"></i> Email HR</button>
+                <button class="btn btn-success" onclick="contactHR('whatsapp')"><i class="fab fa-whatsapp me-2"></i> WhatsApp HR</button>
+                <button class="btn btn-primary" onclick="contactHR('phone')"><i class="fas fa-phone me-2"></i> Call HR</button>
             </div>
         </div>
     </div>
 </div>
-</section>
+
 <section id="team" class="py-5">
     <div class="container">
         <div class="section-header text-center mb-5">
@@ -272,7 +273,6 @@
     </div>
 </section>
 
-<!-- Contact Consultant Section -->
 <section id="contact" class="contact-section py-5">
     <div class="container">
         <div class="section-header">
@@ -308,7 +308,6 @@
     </div>
 </section>
 
-<!-- Testimonials Section -->
 <section id="testimonials" class="py-5 bg-light">
     <div class="container">
         <div class="section-header">
@@ -362,7 +361,6 @@
     </div>
 </section>
 
-<!-- Map Section -->
 <section class="py-5">
     <div class="container">
         <div class="section-header">
@@ -396,7 +394,6 @@
     </div>
 </section>
 
-<!-- Chat Widget -->
 <div class="chat-widget">
     <button class="chat-button" id="chatBtn">
         <i class="fas fa-comments"></i>
@@ -414,7 +411,6 @@
     </div>
 </div>
 
-<!-- Footer -->
 <footer>
     <div class="container">
         <div class="row">
@@ -446,94 +442,10 @@
     </div>
 </footer>
 
-<!-- Bootstrap & Libraries -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script src="assets/js/main.js"></script>
 <script src="main.js"></script>
-<script>
-let selectedCategories = [];
-const categoriesList = ["Accounting", "Finance", "Internal Audit", "Investment", "Taxation", "Risk Management", "Consulting", "Bank Relations", "Data Analysis", "Asset Management"]; // Add more to 100
-
-function openJobWorkflow() {
-    document.getElementById('jobWorkflowModal').style.display = 'flex';
-    const grid = document.getElementById('catGrid');
-    grid.innerHTML = categoriesList.map(cat => `<div class="cat-item" onclick="toggleCat('${cat}', this)">${cat}</div>`).join('');
-}
-
-function closeJobWorkflow() {
-    document.getElementById('jobWorkflowModal').style.display = 'none';
-}
-
-function nextStep(n) {
-    document.querySelectorAll('.workflow-step').forEach(s => s.style.display = 'none');
-    document.getElementById('step-' + n).style.display = 'block';
-}
-
-function selectOption(btn) {
-    btn.parentElement.querySelectorAll('.opt-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-}
-
-function toggleCat(cat, el) {
-    if (selectedCategories.includes(cat)) {
-        selectedCategories = selectedCategories.filter(c => c !== cat);
-        el.classList.remove('selected');
-    } else if (selectedCategories.length < 3) {
-        selectedCategories.push(cat);
-        el.classList.add('selected');
-    } else {
-        alert("Maximum 3 categories allowed.");
-    }
-}
-
-// Array for 100 Job Categories
-const jobCategories = [
-    "Accounting", "Financial Analysis", "Internal Audit", "Taxation", "Legal Consulting", 
-    "Investment Banking", "Risk Management", "Asset Management", "Credit Analysis", 
-    "Forex Trading", "Cryptocurrency Expert", "Project Management", "Data Analysis", 
-    "Human Resources", "Business Development", "Administrative", "Sales Executive"
-];
-// Fill to 100
-while(jobCategories.length < 100) { jobCategories.push("Specialist Role " + jobCategories.length); }
-
-let selectedJobCats = [];
-
-function openJobWorkflow() {
-    document.getElementById('jobWorkflowModal').style.display = 'flex';
-    renderJobCats();
-}
-
-function closeJobWorkflow() {
-    document.getElementById('jobWorkflowModal').style.display = 'none';
-}
-
-function renderJobCats() {
-    const container = document.getElementById('catContainer');
-    container.innerHTML = jobCategories.map(cat => `<div class="cat-item" onclick="selectCat('${cat}', this)">${cat}</div>`).join('');
-}
-
-function selectCat(cat, el) {
-    if (selectedJobCats.includes(cat)) {
-        selectedJobCats = selectedJobCats.filter(c => c !== cat);
-        el.style.background = "white"; el.style.color = "black";
-    } else if (selectedJobCats.length < 3) {
-        selectedJobCats.push(cat);
-        el.style.background = "#003366"; el.style.color = "white";
-    }
-    document.getElementById('catNextBtn').disabled = selectedJobCats.length !== 3;
-}
-
-function nextWF(step) {
-    document.querySelectorAll('.wf-step').forEach(s => s.style.display = 'none');
-    document.getElementById('wf-step-' + step).style.display = 'block';
-}
-
-function updateSal(val) {
-    document.getElementById('salVal').innerText = Number(val).toLocaleString();
-}
-
-</script>
 </body>
 </html>
