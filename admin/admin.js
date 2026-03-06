@@ -93,13 +93,19 @@ function loadMessages() {
         const unread = !msg.replied ? 'unread' : '';
         const status = msg.replied ? '<span class="badge bg-success float-end">Replied</span>' : '<span class="badge bg-warning float-end">Pending</span>';
         
+        // Sanitize message to prevent single quotes from breaking the onclick event
+        const safeMsg = (msg.message || msg.description || "").replace(/'/g, "\\'");
+        
         html += `
             <div class="message-item ${unread}">
                 <h6>${msg.firstName} ${msg.lastName} ${status}</h6>
                 <p>${msg.message || msg.description}</p>
                 <small class="text-muted">${msg.timestamp}</small>
                 <div class="mt-2">
-                    <button class="btn btn-sm btn-canada-red me-2" onclick="openReplyModal(${index}, '${msg.firstName}', '${msg.lastName}', '${msg.email}', '${msg.message || msg.description}')">
+                    <button class="btn btn-sm btn-canada-red me-2" 
+                            data-bs-toggle="modal" 
+                            data-bs-target="#replyModal"
+                            onclick="openReplyModal(${index}, '${msg.firstName}', '${msg.lastName}', '${msg.email}', '${safeMsg}')">
                         <i class="fas fa-reply"></i> Reply
                     </button>
                     <button class="btn btn-sm btn-outline-danger" onclick="deleteMessage(${index})">
@@ -121,7 +127,9 @@ function openReplyModal(index, firstName, lastName, email, originalMsg) {
     document.getElementById('replyText').value = '';
     window.currentMessageIndex = index;
     
-    const modal = new bootstrap.Modal(document.getElementById('replyModal'));
+    // Manual trigger as backup if data-bs attributes fail
+    const modalElement = document.getElementById('replyModal');
+    const modal = bootstrap.Modal.getOrCreateInstance(modalElement);
     modal.show();
 }
 
