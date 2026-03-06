@@ -7,17 +7,7 @@ function loadAllData() {
     loadAppointments();
     loadSignups();
     loadClients();
-}
-
-// Admin Dashboard JavaScript
-
-// Load all data from localStorage
-function loadAllData() {
-    updateDashboard();
-    loadMessages();
-    loadAppointments();
-    loadSignups();
-    loadClients();
+    loadSettings();
 }
 
 // Show specific section
@@ -33,71 +23,56 @@ function showSection(sectionId) {
     });
     
     // Show selected section
-    document.getElementById(sectionId).style.display = 'block';
-    if (event && event.target) {
-        event.target.closest('.nav-link').classList.add('active');
+    const targetSection = document.getElementById(sectionId);
+    if (targetSection) {
+        targetSection.style.display = 'block';
+    }
+
+    // Update active class on nav link
+    const activeLink = document.querySelector(`.sidebar .nav-link[onclick*="${sectionId}"]`);
+    if (activeLink) {
+        activeLink.classList.add('active');
     }
     
-    // Load data for the section
-    if (sectionId === 'messages') {
-        loadMessages();
-    } else if (sectionId === 'appointments') {
-        loadAppointments();
-    } else if (sectionId === 'signups') {
-        loadSignups();
-    } else if (sectionId === 'clients') {
-        loadClients();
-    }
+    // Load data for the specific section
+    if (sectionId === 'messages') loadMessages();
+    else if (sectionId === 'appointments') loadAppointments();
+    else if (sectionId === 'signups') loadSignups();
+    else if (sectionId === 'clients') loadClients();
 }
 
-// Update Dashboard
+// Update Dashboard Stats
 function updateDashboard() {
     const messages = JSON.parse(localStorage.getItem('customerMessages')) || [];
     const appointments = JSON.parse(localStorage.getItem('appointments')) || [];
     const signups = JSON.parse(localStorage.getItem('signups')) || [];
     const clients = JSON.parse(localStorage.getItem('clients')) || [];
     
-    // Update stat cards
     if(document.getElementById('totalMessages')) document.getElementById('totalMessages').textContent = messages.length;
     if(document.getElementById('totalAppointments')) document.getElementById('totalAppointments').textContent = appointments.length;
     if(document.getElementById('totalClients')) document.getElementById('totalClients').textContent = clients.length;
     if(document.getElementById('pendingSignups')) document.getElementById('pendingSignups').textContent = signups.filter(s => s.status === 'pending').length;
     
-    // Update message badge
     if(document.getElementById('msgBadge')) document.getElementById('msgBadge').textContent = messages.filter(m => !m.replied).length;
     
-    // Display recent activity
     const recentActivity = document.getElementById('recentActivity');
     if (recentActivity) {
         let activity = '<ul class="list-unstyled">';
+        if (messages.length > 0) activity += `<li class="mb-2"><i class="fas fa-envelope text-primary"></i> <strong>${messages.length}</strong> customer messages</li>`;
+        if (appointments.length > 0) activity += `<li class="mb-2"><i class="fas fa-calendar text-success"></i> <strong>${appointments.length}</strong> appointments booked</li>`;
+        if (signups.length > 0) activity += `<li class="mb-2"><i class="fas fa-user-plus text-info"></i> <strong>${signups.length}</strong> new sign ups</li>`;
+        if (clients.length > 0) activity += `<li class="mb-2"><i class="fas fa-users text-warning"></i> <strong>${clients.length}</strong> total clients</li>`;
         
-        if (messages.length > 0) {
-            activity += `<li class="mb-2"><i class="fas fa-envelope text-primary"></i> <strong>${messages.length}</strong> customer messages</li>`;
-        }
-        if (appointments.length > 0) {
-            activity += `<li class="mb-2"><i class="fas fa-calendar text-success"></i> <strong>${appointments.length}</strong> appointments booked</li>`;
-        }
-        if (signups.length > 0) {
-            activity += `<li class="mb-2"><i class="fas fa-user-plus text-info"></i> <strong>${signups.length}</strong> new sign ups</li>`;
-        }
-        if (clients.length > 0) {
-            activity += `<li class="mb-2"><i class="fas fa-users text-warning"></i> <strong>${clients.length}</strong> total clients</li>`;
-        }
-        
-        if (activity === '<ul class="list-unstyled">') {
-            activity += '<li class="text-muted">No activity yet</li>';
-        }
-        
+        if (activity === '<ul class="list-unstyled">') activity += '<li class="text-muted">No activity yet</li>';
         activity += '</ul>';
         recentActivity.innerHTML = activity;
     }
 }
 
-// Load Messages
+// Load and Render Messages
 function loadMessages() {
     const messages = JSON.parse(localStorage.getItem('customerMessages')) || [];
     const messagesList = document.getElementById('messagesList');
-    
     if (!messagesList) return;
 
     if (messages.length === 0) {
@@ -110,7 +85,6 @@ function loadMessages() {
         const unread = !msg.replied ? 'unread' : '';
         const status = msg.replied ? '<span class="badge bg-success float-end">Replied</span>' : '<span class="badge bg-warning float-end">Pending</span>';
         
-        // Use HTML entities to prevent single/double quotes from breaking the onclick string
         const safeMsg = (msg.message || msg.description || "").replace(/'/g, "&apos;").replace(/"/g, "&quot;");
         const safeFirst = (msg.firstName || "").replace(/'/g, "&apos;");
         const safeLast = (msg.lastName || "").replace(/'/g, "&apos;");
@@ -132,20 +106,17 @@ function loadMessages() {
             </div>
         `;
     });
-    
     messagesList.innerHTML = html;
 }
 
 // Open Reply Modal
 function openReplyModal(index, firstName, lastName, email, originalMsg) {
-    // Fill the modal fields
     document.getElementById('replyClientName').value = firstName + ' ' + lastName;
     document.getElementById('replyClientEmail').value = email;
     document.getElementById('replyOriginalMsg').value = originalMsg;
     document.getElementById('replyText').value = '';
     window.currentMessageIndex = index;
     
-    // Trigger the Bootstrap Modal correctly for both mobile and desktop
     const modalElement = document.getElementById('replyModal');
     if (modalElement) {
         const modal = bootstrap.Modal.getOrCreateInstance(modalElement);
@@ -194,7 +165,6 @@ function deleteMessage(index) {
 function loadAppointments() {
     const appointments = JSON.parse(localStorage.getItem('appointments')) || [];
     const appointmentsTable = document.getElementById('appointmentsTable');
-    
     if (!appointmentsTable) return;
 
     if (appointments.length === 0) {
@@ -205,7 +175,6 @@ function loadAppointments() {
     let html = '';
     appointments.forEach((appt, index) => {
         const statusBadge = appt.status === 'confirmed' ? 'badge-approved' : (appt.status === 'pending' ? 'badge-pending' : 'badge-rejected');
-        
         html += `
             <tr>
                 <td>${appt.firstName} ${appt.lastName}</td>
@@ -226,21 +195,17 @@ function loadAppointments() {
             </tr>
         `;
     });
-    
     appointmentsTable.innerHTML = html;
 }
 
-// Approve Appointment
 function approveAppointment(index) {
     const appointments = JSON.parse(localStorage.getItem('appointments')) || [];
     appointments[index].status = 'confirmed';
     localStorage.setItem('appointments', JSON.stringify(appointments));
-    alert('Appointment approved!');
     loadAppointments();
     updateDashboard();
 }
 
-// Reject Appointment
 function rejectAppointment(index) {
     if (confirm('Are you sure you want to reject this appointment?')) {
         const appointments = JSON.parse(localStorage.getItem('appointments')) || [];
@@ -251,13 +216,11 @@ function rejectAppointment(index) {
     }
 }
 
-// Delete Appointment
 function deleteAppointment(index) {
-    if (confirm('Are you sure you want to delete this appointment? This action cannot be undone.')) {
+    if (confirm('Delete this appointment permanently?')) {
         const appointments = JSON.parse(localStorage.getItem('appointments')) || [];
         appointments.splice(index, 1);
         localStorage.setItem('appointments', JSON.stringify(appointments));
-        alert('Appointment deleted successfully!');
         loadAppointments();
         updateDashboard();
     }
@@ -267,7 +230,6 @@ function deleteAppointment(index) {
 function loadSignups() {
     const signups = JSON.parse(localStorage.getItem('signups')) || [];
     const signupsTable = document.getElementById('signupsTable');
-    
     if (!signupsTable) return;
 
     if (signups.length === 0) {
@@ -278,7 +240,6 @@ function loadSignups() {
     let html = '';
     signups.forEach((signup, index) => {
         const statusBadge = signup.status === 'approved' ? 'badge-approved' : (signup.status === 'pending' ? 'badge-pending' : 'badge-rejected');
-        
         html += `
             <tr>
                 <td>${signup.firstName} ${signup.lastName}</td>
@@ -300,57 +261,25 @@ function loadSignups() {
             </tr>
         `;
     });
-    
     signupsTable.innerHTML = html;
 }
 
-// Approve Signup
 function approveSignup(index) {
     const signups = JSON.parse(localStorage.getItem('signups')) || [];
     signups[index].status = 'approved';
-    
-    // Move to clients
     const clients = JSON.parse(localStorage.getItem('clients')) || [];
-    clients.push({
-        ...signups[index],
-        status: 'active'
-    });
-    
+    clients.push({ ...signups[index], status: 'active' });
     localStorage.setItem('signups', JSON.stringify(signups));
     localStorage.setItem('clients', JSON.stringify(clients));
-    alert('Signup approved! User added to clients.');
+    alert('Signup approved!');
     loadSignups();
     updateDashboard();
-}
-
-// Reject Signup
-function rejectSignup(index) {
-    if (confirm('Are you sure you want to reject this signup?')) {
-        const signups = JSON.parse(localStorage.getItem('signups')) || [];
-        signups[index].status = 'rejected';
-        localStorage.setItem('signups', JSON.stringify(signups));
-        loadSignups();
-        updateDashboard();
-    }
-}
-
-// Delete Signup
-function deleteSignup(index) {
-    if (confirm('Are you sure you want to delete this signup? This action cannot be undone.')) {
-        const signups = JSON.parse(localStorage.getItem('signups')) || [];
-        signups.splice(index, 1);
-        localStorage.setItem('signups', JSON.stringify(signups));
-        alert('Signup deleted successfully!');
-        loadSignups();
-        updateDashboard();
-    }
 }
 
 // Load Clients
 function loadClients() {
     const clients = JSON.parse(localStorage.getItem('clients')) || [];
     const clientsTable = document.getElementById('clientsTable');
-    
     if (!clientsTable) return;
 
     if (clients.length === 0) {
@@ -360,15 +289,13 @@ function loadClients() {
     
     let html = '';
     clients.forEach((client, index) => {
-        const statusBadge = client.status === 'active' ? 'badge-approved' : 'badge-pending';
-        
         html += `
             <tr>
                 <td>${client.firstName} ${client.lastName}</td>
                 <td>${client.email}</td>
                 <td>${client.phone || 'N/A'}</td>
                 <td>${client.accountType}</td>
-                <td><span class="badge-custom ${statusBadge}">${client.status || 'Active'}</span></td>
+                <td><span class="badge-custom badge-approved">Active</span></td>
                 <td>
                     <button class="btn btn-sm btn-info me-1" onclick="viewClientDetails(${index})">
                         <i class="fas fa-eye"></i> View
@@ -380,28 +307,17 @@ function loadClients() {
             </tr>
         `;
     });
-    
     clientsTable.innerHTML = html;
 }
 
-// View Client Details
 function viewClientDetails(index) {
     const clients = JSON.parse(localStorage.getItem('clients')) || [];
     const client = clients[index];
-    
-    alert(`
-Client Details:
-Name: ${client.firstName} ${client.lastName}
-Email: ${client.email}
-Phone: ${client.phone}
-Account Type: ${client.accountType}
-Status: ${client.status}
-    `);
+    alert(`Name: ${client.firstName} ${client.lastName}\nEmail: ${client.email}\nPhone: ${client.phone}\nAccount: ${client.accountType}`);
 }
 
-// Delete Client
 function deleteClient(index) {
-    if (confirm('Are you sure you want to delete this client?')) {
+    if (confirm('Delete client?')) {
         const clients = JSON.parse(localStorage.getItem('clients')) || [];
         clients.splice(index, 1);
         localStorage.setItem('clients', JSON.stringify(clients));
@@ -410,118 +326,26 @@ function deleteClient(index) {
     }
 }
 
-// Save Settings
+// Settings Management
 function saveSettings() {
     const settings = {
         adminName: document.getElementById('adminName').value,
-        adminEmail: document.getElementById('adminEmail').value,
-        supportEmail: document.getElementById('supportEmail').value,
-        whatsappNumber: document.getElementById('whatsappNumber').value,
-        responseTime: document.getElementById('responseTime').value,
-        openTime: document.getElementById('openTime').value,
-        closeTime: document.getElementById('closeTime').value
+        adminEmail: document.getElementById('adminEmail').value
     };
-    
     localStorage.setItem('adminSettings', JSON.stringify(settings));
-    alert('Settings saved successfully!');
+    alert('Settings saved!');
 }
 
-// Load Settings
 function loadSettings() {
     const settings = JSON.parse(localStorage.getItem('adminSettings')) || {};
-    
     if (settings.adminName && document.getElementById('adminName')) document.getElementById('adminName').value = settings.adminName;
     if (settings.adminEmail && document.getElementById('adminEmail')) document.getElementById('adminEmail').value = settings.adminEmail;
-    if (settings.supportEmail && document.getElementById('supportEmail')) document.getElementById('supportEmail').value = settings.supportEmail;
-    if (settings.whatsappNumber && document.getElementById('whatsappNumber')) document.getElementById('whatsappNumber').value = settings.whatsappNumber;
-    if (settings.responseTime && document.getElementById('responseTime')) document.getElementById('responseTime').value = settings.responseTime;
-    if (settings.openTime && document.getElementById('openTime')) document.getElementById('openTime').value = settings.openTime;
-    if (settings.closeTime && document.getElementById('closeTime')) document.getElementById('closeTime').value = settings.closeTime;
 }
 
-// Export Data
-function exportData(type) {
-    let data = [];
-    let filename = '';
-    
-    if (type === 'clients') {
-        data = JSON.parse(localStorage.getItem('clients')) || [];
-        filename = 'clients.json';
-    } else if (type === 'messages') {
-        data = JSON.parse(localStorage.getItem('customerMessages')) || [];
-        filename = 'messages.json';
-    } else if (type === 'appointments') {
-        data = JSON.parse(localStorage.getItem('appointments')) || [];
-        filename = 'appointments.json';
-    }
-    
-    const dataStr = JSON.stringify(data, null, 2);
-    const dataBlob = new Blob([dataStr], { type: 'application/json' });
-    const url = URL.createObjectURL(dataBlob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = filename;
-    link.click();
-}
+// Initializing
+window.addEventListener('load', loadAllData);
 
-// Logout
-function logout() {
-    if (confirm('Are you sure you want to logout?')) {
-        window.location.href = '../index.html';
-    }
-}
-
-// Intercept form submissions to save to localStorage
-window.addEventListener('load', function() {
-    loadSettings();
-    loadAllData();
-    
-    // Intercept signup form
-    const signupForm = document.getElementById('signupForm');
-    if (signupForm) {
-        signupForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const formData = new FormData(signupForm);
-            const data = Object.fromEntries(formData);
-            
-            let signups = JSON.parse(localStorage.getItem('signups')) || [];
-            signups.push({
-                ...data,
-                timestamp: new Date().toLocaleString(),
-                status: 'pending',
-                id: Date.now()
-            });
-            localStorage.setItem('signups', JSON.stringify(signups));
-            
-            signupForm.reset();
-        });
-    }
-    
-    // Intercept appointment form
-    const appointmentForm = document.getElementById('appointmentForm');
-    if (appointmentForm) {
-        appointmentForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const formData = new FormData(appointmentForm);
-            const data = Object.fromEntries(formData);
-            
-            let appointments = JSON.parse(localStorage.getItem('appointments')) || [];
-            appointments.push({
-                ...data,
-                timestamp: new Date().toLocaleString(),
-                status: 'pending',
-                id: Date.now()
-            });
-            localStorage.setItem('appointments', JSON.stringify(appointments));
-            
-            appointmentForm.reset();
-        });
-    }
-});
-
-// Auto refresh dashboard
+// Auto refresh
 setInterval(() => {
     const dashboard = document.getElementById('dashboard');
     if (dashboard && dashboard.style.display !== 'none') {
